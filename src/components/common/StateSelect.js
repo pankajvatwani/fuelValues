@@ -13,7 +13,11 @@ export default function StateSelect(props) {
 			<FormControl fullWidth>
 				<InputLabel>{label}</InputLabel>
 				<Select value={value} label={label} onChange={handleChange}>
-					{states.map((state) => <MenuItem value={state.statecode}>{state.statename}</MenuItem>)}
+					{states.map((state) => (
+						<MenuItem key={state.statecode} value={state.statecode}>
+							{state.statename}
+						</MenuItem>
+					))}
 				</Select>
 			</FormControl>
 		</Box>

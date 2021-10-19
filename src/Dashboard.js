@@ -26,6 +26,7 @@ import SupplierSelect from './components/common/SupplierSelect';
 import BasicTable from './components/common/BasicTable';
 import CustomButton from './components/common/CustomButton';
 import { states } from './data/states';
+import { get } from 'lodash';
 
 const drawerWidth = 240;
 
@@ -93,10 +94,10 @@ function DashboardContent() {
 		setTax(e.target.vale);
 	};
 	const handleCustomerChange = (e) => {
-		setCustomer(e.target.vale);
+		setCustomer(e.target.value);
 	};
 	const handleSupplierChange = (e) => {
-		setSupplier(e.target.vale);
+		setSupplier(e.target.value);
 	};
 	const toggleDrawer = () => {
 		setOpen(!open);
@@ -132,13 +133,31 @@ function DashboardContent() {
 								}}
 							/>
 						</IconButton>
-						<Typography
-							variant="h6"
-							component="div"
-							sx={{ flexGrow: 1, color: 'black', alignItems: 'flex-start', display: 'flex' }}
+						<div
+							style={{
+								flexGrow: 1,
+								alignItems: 'flex-start',
+								display: 'flex',
+								flexDirection: 'column'
+							}}
 						>
-							Fuel Values
-						</Typography>
+							<Typography
+								component="div"
+								sx={{
+									color: '#F5874A'
+								}}
+							>
+								FuelValues
+							</Typography>
+							<Typography
+								component="div"
+								sx={{
+									color: '#F5874A'
+								}}
+							>
+								{'Solutions&More'}
+							</Typography>
+						</div>
 						<IconButton
 							sx={{
 								backgroundColor: 'grey',
@@ -244,7 +263,7 @@ function DashboardContent() {
 							</PanelTemplate>
 							{search && (
 								<PanelTemplate
-									header={`United States, ${state}-${stateSelected.statename}`}
+									header={`United States, ${state}-${get(stateSelected, 'statename', '')}`}
 									grey={true}
 								>
 									<Grid container spacing={3}>

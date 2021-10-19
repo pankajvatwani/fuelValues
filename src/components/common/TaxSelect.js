@@ -13,7 +13,11 @@ export default function TaxSelect(props) {
 			<FormControl fullWidth>
 				<InputLabel>{label}</InputLabel>
 				<Select value={value} label={label} onChange={handleChange}>
-					{TaxItems.map((taxItem) => <MenuItem value={taxItem.Code}>{taxItem.TaxItem}</MenuItem>)}
+					{TaxItems.map((taxItem) => (
+						<MenuItem key={taxItem.Code} value={taxItem.Code}>
+							{taxItem.TaxItem}
+						</MenuItem>
+					))}
 				</Select>
 			</FormControl>
 		</Box>

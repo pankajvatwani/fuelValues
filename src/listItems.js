@@ -2,40 +2,48 @@ import * as React from 'react';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-// import ListSubheader from '@mui/material/ListSubheader';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
-// import AssignmentIcon from '@mui/icons-material/Assignment';
 
 export const mainListItems = (
 	<div>
 		<ListItem
 			button
 			sx={{
+				display: 'flex',
+				flexDirection: 'column',
 				'&:hover': {
 					backgroundColor: '#F5874A',
-					color: 'white'
+					color: 'white',
+					'& svg': {
+						color: 'white'
+					}
 				}
 			}}
 		>
-			<ListItemIcon>
-				<DashboardIcon />
+			<ListItemIcon sx={{ minWidth: '24px' }}>
+				<HomeIcon />
 			</ListItemIcon>
 			<ListItemText primary="Dashboard" />
 		</ListItem>
 		<ListItem
 			button
 			sx={{
+				display: 'flex',
+				flexDirection: 'column',
 				'&:hover': {
 					backgroundColor: '#F5874A',
-					color: 'white'
+					color: 'white',
+					'& svg': {
+						color: 'white'
+					}
 				}
 			}}
 		>
-			<ListItemIcon>
+			<ListItemIcon sx={{ minWidth: '24px' }}>
 				<ShoppingCartIcon />
 			</ListItemIcon>
 			<ListItemText primary="Taxes" />
@@ -43,13 +51,18 @@ export const mainListItems = (
 		<ListItem
 			button
 			sx={{
+				display: 'flex',
+				flexDirection: 'column',
 				'&:hover': {
 					backgroundColor: '#F5874A',
-					color: 'white'
+					color: 'white',
+					'& svg': {
+						color: 'white'
+					}
 				}
 			}}
 		>
-			<ListItemIcon>
+			<ListItemIcon sx={{ minWidth: '24px' }}>
 				<PeopleIcon />
 			</ListItemIcon>
 			<ListItemText primary="Fees" />
@@ -57,13 +70,18 @@ export const mainListItems = (
 		<ListItem
 			button
 			sx={{
+				display: 'flex',
+				flexDirection: 'column',
 				'&:hover': {
 					backgroundColor: '#F5874A',
-					color: 'white'
+					color: 'white',
+					'& svg': {
+						color: 'white'
+					}
 				}
 			}}
 		>
-			<ListItemIcon>
+			<ListItemIcon sx={{ minWidth: '24px' }}>
 				<BarChartIcon />
 			</ListItemIcon>
 			<ListItemText primary="Reports" />
@@ -71,40 +89,21 @@ export const mainListItems = (
 		<ListItem
 			button
 			sx={{
+				display: 'flex',
+				flexDirection: 'column',
 				'&:hover': {
 					backgroundColor: '#F5874A',
-					color: 'white'
+					color: 'white',
+					'& svg': {
+						color: 'white'
+					}
 				}
 			}}
 		>
-			<ListItemIcon>
+			<ListItemIcon sx={{ minWidth: '24px' }}>
 				<LayersIcon />
 			</ListItemIcon>
 			<ListItemText primary="Settings" />
 		</ListItem>
 	</div>
 );
-
-// export const secondaryListItems = (
-//   <div>
-//     <ListSubheader inset>Saved reports</ListSubheader>
-//     <ListItem button>
-//       <ListItemIcon>
-//         <AssignmentIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Current month" />
-//     </ListItem>
-//     <ListItem button>
-//       <ListItemIcon>
-//         <AssignmentIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Last quarter" />
-//     </ListItem>
-//     <ListItem button>
-//       <ListItemIcon>
-//         <AssignmentIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Year-end sale" />
-//     </ListItem>
-//   </div>
-// );

@@ -13,7 +13,11 @@ export default function CustomerSelect(props) {
 			<FormControl fullWidth>
 				<InputLabel>{label}</InputLabel>
 				<Select value={value} label={label} onChange={handleChange}>
-					{Customers.map((customer) => <MenuItem value={customer.Code}>{customer.Name}</MenuItem>)}
+					{Customers.map((customer) => (
+						<MenuItem key={customer.Code} value={customer.Code}>
+							{customer.Name}
+						</MenuItem>
+					))}
 				</Select>
 			</FormControl>
 		</Box>

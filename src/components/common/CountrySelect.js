@@ -13,7 +13,11 @@ export default function CountrySelect(props) {
 			<FormControl fullWidth>
 				<InputLabel>{label}</InputLabel>
 				<Select value={value} label={label} onChange={handleChange}>
-					{countries.map((country) => <MenuItem value={country.code}>{country.name}</MenuItem>)}
+					{countries.map((country) => (
+						<MenuItem key={country.code} value={country.code}>
+							{country.name}
+						</MenuItem>
+					))}
 				</Select>
 			</FormControl>
 		</Box>

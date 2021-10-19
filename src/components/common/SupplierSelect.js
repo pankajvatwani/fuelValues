@@ -13,7 +13,11 @@ export default function SupplierSelect(props) {
 			<FormControl fullWidth>
 				<InputLabel>{label}</InputLabel>
 				<Select value={value} label={label} onChange={handleChange}>
-					{Suppliers.map((supplier) => <MenuItem value={supplier.Code}>{supplier.Name}</MenuItem>)}
+					{Suppliers.map((supplier) => (
+						<MenuItem key={supplier.Code} value={supplier.Code}>
+							{supplier.Name}
+						</MenuItem>
+					))}
 				</Select>
 			</FormControl>
 		</Box>
