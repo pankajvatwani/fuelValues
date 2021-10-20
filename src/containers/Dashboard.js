@@ -17,16 +17,13 @@ import { mainListItems } from './listItems';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import PanelTemplate from './components/common/PanelTemplate';
-import CountrySelect from './components/common/CountrySelect';
-import StateSelect from './components/common/StateSelect';
-import TaxSelect from './components/common/TaxSelect';
-import CustomerSelect from './components/common/CustomerSelect';
-import SupplierSelect from './components/common/SupplierSelect';
-import BasicTable from './components/common/BasicTable';
-import CustomButton from './components/common/CustomButton';
-import { states } from './data/states';
+import PanelTemplate from '../components/common/PanelTemplate';
+import BasicSelect from '../components/common/BasicSelect';
+import BasicTable from '../components/common/BasicTable';
+import CustomButton from '../components/common/CustomButton';
+import { states } from '../data/states';
 import { get } from 'lodash';
+import { countryData, customerData, stateData, supplierData, taxData } from '../data/finalSelectData';
 
 const drawerWidth = 240;
 
@@ -39,15 +36,15 @@ const AppBar = styled(MuiAppBar, {
 		duration: theme.transitions.duration.leavingScreen
 	}),
 	display: 'flex',
-	justifyContent: 'center',
-	...(open && {
-		marginLeft: drawerWidth,
-		width: `calc(100% - ${drawerWidth}px)`,
-		transition: theme.transitions.create([ 'width', 'margin' ], {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen
-		})
-	})
+	justifyContent: 'center'
+	// ...(open && {
+	// 	marginLeft: drawerWidth,
+	// 	width: `calc(100% - ${drawerWidth}px)`,
+	// 	transition: theme.transitions.create([ 'width', 'margin' ], {
+	// 		easing: theme.transitions.easing.sharp,
+	// 		duration: theme.transitions.duration.enteringScreen
+	// 	})
+	// })
 }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
@@ -66,10 +63,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 				easing: theme.transitions.easing.sharp,
 				duration: theme.transitions.duration.leavingScreen
 			}),
-			width: theme.spacing(7),
-			[theme.breakpoints.up('sm')]: {
-				width: theme.spacing(9)
-			}
+			width: theme.spacing(15)
+			// [theme.breakpoints.up('sm')]: {
+			// 	width: theme.spacing(9)
+			// }
 		})
 	}
 }));
@@ -114,7 +111,7 @@ function DashboardContent() {
 							pr: '24px' // keep right padding when drawer closed
 						}}
 					>
-						<IconButton
+						{/* <IconButton
 							edge="start"
 							color="inherit"
 							aria-label="open drawer"
@@ -132,7 +129,7 @@ function DashboardContent() {
 									}
 								}}
 							/>
-						</IconButton>
+						</IconButton> */}
 						<div
 							style={{
 								flexGrow: 1,
@@ -170,7 +167,7 @@ function DashboardContent() {
 						</IconButton>
 					</Toolbar>
 				</AppBar>
-				<Drawer variant="permanent" open={open}>
+				<Drawer variant="permanent" open={open} sx={{ pt: '64px' }}>
 					<Toolbar
 						sx={{
 							display: 'flex',
@@ -179,9 +176,7 @@ function DashboardContent() {
 							px: [ 1 ]
 						}}
 					>
-						<IconButton onClick={toggleDrawer}>
-							<ChevronLeftIcon />
-						</IconButton>
+						<IconButton onClick={toggleDrawer}>{open ? <ChevronLeftIcon /> : <MenuIcon />}</IconButton>
 					</Toolbar>
 					<Divider />
 					<List>{mainListItems}</List>
@@ -203,36 +198,45 @@ function DashboardContent() {
 							<PanelTemplate header="Taxes">
 								<Grid container spacing={3} sx={{ mb: 2, pr: 1, pl: 1 }}>
 									<Grid item xs={12} md={6} lg={4}>
-										<CountrySelect
+										<BasicSelect
 											label={'Country'}
 											value={country}
 											handleChange={handleCountryChange}
+											options={countryData}
 										/>
 									</Grid>
 									<Grid item xs={12} md={6} lg={4}>
-										<StateSelect
-											label={'IATA/ICO'}
+										<BasicSelect
+											label={'States'}
 											value={state}
 											handleChange={handleStateChange}
+											options={stateData}
 										/>
 									</Grid>
 									<Grid item xs={12} md={6} lg={4}>
-										<TaxSelect label={'Tax'} value={tax} handleChange={handleTaxChange} />
+										<BasicSelect
+											label={'Tax'}
+											value={tax}
+											handleChange={handleTaxChange}
+											options={taxData}
+										/>
 									</Grid>
 								</Grid>
 								<Grid container spacing={3} sx={{ mb: 2, pr: 1, pl: 1 }}>
 									<Grid item xs={12} md={6} lg={4}>
-										<CustomerSelect
+										<BasicSelect
 											label={'Customer'}
 											value={customer}
 											handleChange={handleCustomerChange}
+											options={customerData}
 										/>
 									</Grid>
 									<Grid item xs={12} md={6} lg={4}>
-										<SupplierSelect
+										<BasicSelect
 											label={'Supplier'}
 											value={supplier}
 											handleChange={handleSupplierChange}
+											options={supplierData}
 										/>
 									</Grid>
 									<Grid item xs={12} md={6} lg={4}>
