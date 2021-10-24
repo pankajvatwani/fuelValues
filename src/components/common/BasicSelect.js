@@ -10,7 +10,7 @@ export default function BasicSelect(props) {
 	return (
 		<Box sx={{ minWidth: 120 }}>
 			<FormControl fullWidth>
-				<InputLabel>{label}</InputLabel>
+				<InputLabel sx={{ fontWeight: 700, color: 'black' }}>{label}</InputLabel>
 				<Select value={value} label={label} onChange={handleChange}>
 					{options.map((option) => (
 						<MenuItem key={option.value} value={option.value}>

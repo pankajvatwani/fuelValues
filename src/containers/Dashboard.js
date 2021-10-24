@@ -13,7 +13,7 @@ import Grid from '@mui/material/Grid';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { mainListItems } from './listItems';
+import MainListItems from './listItems';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -179,12 +179,14 @@ function DashboardContent() {
 						<IconButton onClick={toggleDrawer}>{open ? <ChevronLeftIcon /> : <MenuIcon />}</IconButton>
 					</Toolbar>
 					<Divider />
-					<List>{mainListItems}</List>
+					<List>
+						<MainListItems />
+					</List>
 				</Drawer>
 				<Box
 					component="main"
 					sx={{
-						backgroundColor: 'white',
+						backgroundColor: '#f1f1f1',
 						flexGrow: 1,
 						height: '100vh',
 						overflow: 'auto',

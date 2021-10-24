@@ -11,7 +11,7 @@ import { result } from '../../data/TaxSearchResult';
 export default function BasicTable() {
 	return (
 		<TableContainer component={Paper}>
-			<Table sx={{ minWidth: 650 }}>
+			<Table sx={{ minWidth: 650, backgroundColor: '#f1f1f1' }}>
 				<TableHead>
 					<TableRow>
 						<TableCell
