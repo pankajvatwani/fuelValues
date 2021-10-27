@@ -52,6 +52,9 @@ class MainListItems extends React.Component {
 							}
 						}
 					}}
+					onClick={() => {
+						forwardTo('/taxes');
+					}}
 				>
 					<ListItemIcon sx={{ minWidth: '24px' }}>
 						<ShoppingCartIcon />
