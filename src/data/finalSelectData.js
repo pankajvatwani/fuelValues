@@ -3,6 +3,7 @@ import { states } from './states';
 import { TaxItems } from './TaxItems';
 import { Customers } from './CustomerList';
 import { Suppliers } from './SupplierList';
+import { FL } from './FLAirport';
 
 export const countryData = countries.map((country) => {
 	return {
@@ -37,4 +38,12 @@ export const supplierData = Suppliers.map((supplier) => {
 		value: supplier.Code,
 		name: supplier.Name
 	};
+});
+
+export const IATAData = FL.map((airport) => {
+	return { label: airport.IATA };
+});
+
+export const ICAOData = FL.map((airport) => {
+	return { label: airport.ICAP };
 });

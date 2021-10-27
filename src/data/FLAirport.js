@@ -1,6 +1,7 @@
 export const FL = [
 	{
 		City: 'Daytona Beach',
+		County: 'Volusia County',
 		FAA: 'DAB',
 		IATA: 'DAB',
 		ICAP: 'KDAB',
@@ -9,6 +10,7 @@ export const FL = [
 	},
 	{
 		City: 'Fort Lauderdale',
+		County: 'Broward County',
 		FAA: 'FLL',
 		IATA: 'FLL',
 		ICAP: 'KFLL',
@@ -17,6 +19,7 @@ export const FL = [
 	},
 	{
 		City: 'Fort Myers',
+		County: 'Lee County',
 		FAA: 'RSW',
 		IATA: 'RSW',
 		ICAP: 'KRSW',
@@ -41,6 +44,7 @@ export const FL = [
 	},
 	{
 		City: 'Jacksonville',
+		County: 'Duval County',
 		FAA: 'JAX',
 		IATA: 'JAX',
 		ICAP: 'KJAX',
@@ -49,6 +53,7 @@ export const FL = [
 	},
 	{
 		City: 'Key West',
+		County: 'Monroe County',
 		FAA: 'EYW',
 		IATA: 'EYW',
 		ICAP: 'KEYW',
@@ -57,6 +62,7 @@ export const FL = [
 	},
 	{
 		City: 'Melbourne',
+		County: 'Brevard County',
 		FAA: 'MLB',
 		IATA: 'MLB',
 		ICAP: 'KMLB',
@@ -65,6 +71,7 @@ export const FL = [
 	},
 	{
 		City: 'Miami',
+		County: 'Miami-Dade',
 		FAA: 'MIA',
 		IATA: 'MIA',
 		ICAP: 'KMIA',
@@ -73,6 +80,7 @@ export const FL = [
 	},
 	{
 		City: 'Orlando',
+		County: 'Orange',
 		FAA: 'MCO',
 		IATA: 'MCO',
 		ICAP: 'KMCO',

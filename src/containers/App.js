@@ -1,11 +1,20 @@
-import Dashboard from './Dashboard';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import Layout from './Layout';
+import Taxes from './Taxes';
+
+const history = createBrowserHistory();
 
 function App() {
-  return (
-    <div className="App">
-    <Dashboard />
-  </div>
-  );
+	return (
+		<div className="App">
+			<Router history={history}>
+				<Switch>
+					<Layout path="/taxes" component={Taxes} />
+				</Switch>
+			</Router>
+		</div>
+	);
 }
 
 export default App;
