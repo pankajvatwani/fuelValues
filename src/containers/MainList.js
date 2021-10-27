@@ -7,26 +7,10 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
-import { withStyles } from '@mui/styles';
-
-const styles = (theme) => ({
-	itemStyle: {
-		display: 'flex',
-		flexDirection: 'column',
-		'&:hover': {
-			backgroundColor: '#F5874A',
-			color: 'white',
-			'& svg': {
-				color: 'white'
-			}
-		}
-	}
-});
-
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import { forwardTo } from './utils';
 class MainListItems extends React.Component {
 	render() {
-		// const classes = this.props;
-		// console.log(classes);
 		return (
 			<div>
 				<ListItem
@@ -81,6 +65,36 @@ class MainListItems extends React.Component {
 						primary="Taxes"
 					/>
 				</ListItem>
+				<ListItem
+					button
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						'&:hover': {
+							backgroundColor: '#F5874A',
+							color: 'white',
+							'& svg': {
+								color: 'white'
+							}
+						}
+					}}
+					onClick={() => {
+						forwardTo('/compute');
+					}}
+				>
+					<ListItemIcon sx={{ minWidth: '24px' }}>
+						<AssignmentIcon />
+					</ListItemIcon>
+					<ListItemText
+						sx={{
+							'& span': {
+								fontWeight: 700
+							}
+						}}
+						primary="Compute"
+					/>
+				</ListItem>
+
 				<ListItem
 					button
 					sx={{
@@ -164,4 +178,4 @@ class MainListItems extends React.Component {
 	}
 }
 
-export default withStyles(styles)(MainListItems);
+export default MainListItems;

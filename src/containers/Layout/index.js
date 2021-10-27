@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MainListItems from '../listItems';
+import MainListItems from '../MainList';
 import Logo from '../../data/Logo.png';
 import { Avatar } from '@mui/material';
 
