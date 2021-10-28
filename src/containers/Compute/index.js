@@ -11,8 +11,10 @@ import Checkbox from '@mui/material/Checkbox';
 import { cloneDeep } from 'lodash';
 import BasicAutocomplete from '../../components/common/BasicAutocomplete';
 import BasicSelect from '../../components/common/BasicSelect';
-import { aircraftTypeData, flightServiceTypeData, fuelTypeData } from '../../data/finalSelectData';
+import { aircraftTypeData, flightServiceTypeData, fuelTypeData, IATAData, ICAOData } from '../../data/finalSelectData';
 import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import { FL } from '../../data/FLAirport';
 
 function Compute() {
 	const [ expanded, setExpanded ] = React.useState([ 'panel1', 'panel2', 'panel3', 'panel4', 'panel5' ]);
@@ -56,7 +58,11 @@ function Compute() {
 		aircraftType: { label: '' },
 		flightServiceType: { label: '' },
 		corpCommercial: '',
-		internationalFlight: false
+		internationalFlight: false,
+		iata: { label: '' },
+		etd: '',
+		timeFrom: '',
+		timeTo: ''
 	});
 
 	const handleTrasactionCheckboxChange = (event) => {
@@ -103,6 +109,20 @@ function Compute() {
 		});
 	};
 
+	const handleIATAChange = (e, newValue) => {
+		setState({
+			...state,
+			iata: newValue
+		});
+	};
+
+	const handleTextFieldChange = (key) => (e) => {
+		setState({
+			...state,
+			[key]: e.target.value
+		});
+	};
+
 	const {
 		intoPlane,
 		intoTruck,
@@ -119,9 +139,14 @@ function Compute() {
 		aircraftType,
 		flightServiceType,
 		corpCommercial,
-		internationalFlight
+		internationalFlight,
+		iata,
+		etd,
+		timeFrom,
+		timeTo
 	} = state;
 
+	const iataObject = FL.find((fl) => fl.IATA === iata.label);
 	return (
 		<Box
 			component="main"
@@ -179,10 +204,46 @@ function Compute() {
 					<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>Location</Typography>
 				</AccordionSummary>
 				<AccordionDetails>
-					<Typography>
-						Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus, varius pulvinar diam eros
-						in elit. Pellentesque convallis laoreet laoreet.
-					</Typography>
+					<Grid container spacing={3}>
+						<Grid item xs={12} md={6} lg={3}>
+							<BasicAutocomplete
+								label={'IATA/ICAO'}
+								value={iata}
+								handleChange={handleIATAChange}
+								options={[ ...IATAData, ...ICAOData ].filter((option) => {
+									return option.label !== '' && option.label !== undefined;
+								})}
+							/>
+						</Grid>
+					</Grid>
+					<Grid container spacing={3} sx={{ mt: '5px' }}>
+						<Grid item xs={12} md={6} lg={3}>
+							<TextField
+								value={etd}
+								onChange={handleTextFieldChange('etd')}
+								label="ETD"
+								variant="outlined"
+							/>
+						</Grid>
+					</Grid>
+					<Grid container spacing={3} sx={{ mt: '5px' }}>
+						<Grid item xs={12} md={6} lg={2}>
+							<TextField
+								value={timeFrom}
+								onChange={handleTextFieldChange('timeFrom')}
+								label="Time From"
+								variant="outlined"
+							/>
+						</Grid>
+						<Grid item xs={12} md={6} lg={2}>
+							<TextField
+								value={timeTo}
+								onChange={handleTextFieldChange('timeTo')}
+								label="Time To"
+								variant="outlined"
+							/>
+						</Grid>
+					</Grid>
 				</AccordionDetails>
 			</Accordion>
 			<Accordion expanded={expanded.includes('panel3')} onChange={handleChange('panel3')}>
