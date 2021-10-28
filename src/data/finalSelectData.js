@@ -4,6 +4,9 @@ import { TaxItems } from './TaxItems';
 import { Customers } from './CustomerList';
 import { Suppliers } from './SupplierList';
 import { FL } from './FLAirport';
+import { fuelData } from './fuel';
+import { aircraftType } from './aircraftType';
+import { flightServiceType } from './flightServiceType';
 
 export const countryData = countries.map((country) => {
 	return {
@@ -46,4 +49,16 @@ export const IATAData = FL.map((airport) => {
 
 export const ICAOData = FL.map((airport) => {
 	return { label: airport.ICAP };
+});
+
+export const fuelTypeData = fuelData.map((fuel) => {
+	return { label: fuel };
+});
+
+export const aircraftTypeData = aircraftType.map((craft) => {
+	return { label: craft };
+});
+
+export const flightServiceTypeData = flightServiceType.map((craft) => {
+	return { label: craft };
 });
