@@ -471,7 +471,7 @@ function Compute() {
 						</Grid>
 					</AccordionDetails>
 				</Accordion>
-				<Box sx={{ display: 'flex', alignItems: 'flex-end', mt: '10px' }}>
+				<Box sx={{ display: 'flex', alignItems: 'flex-end', mt: '10px', mb: '10px' }}>
 					<ComputeButton
 						sx={{ ml: 'auto' }}
 						onClick={() => {
