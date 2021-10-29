@@ -7,6 +7,8 @@ import { FL } from './FLAirport';
 import { fuelData } from './fuel';
 import { aircraftType } from './aircraftType';
 import { flightServiceType } from './flightServiceType';
+import { IPAL } from './IntoPlageAgentsList';
+import { UOM } from './UOM';
 
 export const countryData = countries.map((country) => {
 	return {
@@ -61,4 +63,12 @@ export const aircraftTypeData = aircraftType.map((craft) => {
 
 export const flightServiceTypeData = flightServiceType.map((craft) => {
 	return { label: craft };
+});
+
+export const ipalData = IPAL.map((ipal) => {
+	return { label: ipal.Name };
+});
+
+export const uomData = UOM.map((uom) => {
+	return { label: uom.Description };
 });

@@ -17,7 +17,8 @@ const styles = (theme) => ({
 		fontWeight: 'bold',
 		display: 'flex',
 		alignItems: 'flex-start',
-		marginBottom: '16px'
+		marginBottom: '16px',
+		fontSize: '20px'
 	},
 	greyHeader: {
 		background: '#6D6D6F',
