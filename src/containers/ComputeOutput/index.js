@@ -125,7 +125,7 @@ function ComputeOutput({ state }) {
 
 			<Box sx={{ width: '100%', typography: 'body1', mt: '10px' }}>
 				<TabContext value={value}>
-					<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+					<Box sx={{ borderColor: 'divider', pl: '24px' }}>
 						<TabList onChange={handleChange}>
 							<Tab label="Customer" value="1" />
 							<Tab label="Supplier/Agents" value="2" />

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -18,14 +19,14 @@ import {
 	ICAOData,
 	stateData,
 	supplierData,
-	taxData
+	// taxData
 } from '../../data/finalSelectData';
 
 function Taxes() {
 	const [ search, setSearch ] = React.useState(false);
 	const [ country, setCountry ] = React.useState('');
 	const [ state, setState ] = React.useState('');
-	const [ tax, setTax ] = React.useState('');
+	// const [ tax, setTax ] = React.useState('');
 	const [ customer, setCustomer ] = React.useState('');
 	const [ supplier, setSupplier ] = React.useState('');
 	const [ iata, setIata ] = React.useState({ label: '' });
@@ -35,9 +36,9 @@ function Taxes() {
 	const handleStateChange = (e) => {
 		setState(e.target.value);
 	};
-	const handleTaxChange = (e) => {
-		setTax(e.target.value);
-	};
+	// const handleTaxChange = (e) => {
+	// 	setTax(e.target.value);
+	// };
 	const handleCustomerChange = (e) => {
 		setCustomer(e.target.value);
 	};
@@ -66,7 +67,7 @@ function Taxes() {
 				<Grid item xs={12}>
 					<PanelTemplate header="Taxes">
 						<Grid container spacing={3} sx={{ mb: 2, pr: 1, pl: 1 }}>
-							<Grid item xs={12} md={6} lg={3}>
+							<Grid item xs={12} md={6} lg={4}>
 								<BasicSelect
 									label={'Country'}
 									value={country}
@@ -74,7 +75,7 @@ function Taxes() {
 									options={countryData}
 								/>
 							</Grid>
-							<Grid item xs={12} md={6} lg={3}>
+							<Grid item xs={12} md={6} lg={4}>
 								<BasicSelect
 									label={'States'}
 									value={state}
@@ -82,15 +83,15 @@ function Taxes() {
 									options={stateData}
 								/>
 							</Grid>
-							<Grid item xs={12} md={6} lg={3}>
+							{/* <Grid item xs={12} md={6} lg={3}>
 								<BasicSelect
 									label={'Tax'}
 									value={tax}
 									handleChange={handleTaxChange}
 									options={taxData}
 								/>
-							</Grid>
-							<Grid item xs={12} md={6} lg={3}>
+							</Grid> */}
+							<Grid item xs={12} md={6} lg={4}>
 								<BasicAutocomplete
 									label={'IATA/ICAO'}
 									value={iata}
@@ -138,6 +139,13 @@ function Taxes() {
 								>
 									Search
 								</CustomButton>
+							</Grid>
+						</Grid>
+						<Grid container spacing={3} sx={{ mb: 2, pr: 1, pl: 1 }}>
+							<Grid item xs={12} md={6} lg={4} sx={{ ml: 'auto' }}>
+								<Link>
+								 Advanced Search
+								</Link>
 							</Grid>
 						</Grid>
 					</PanelTemplate>

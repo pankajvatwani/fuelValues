@@ -24,6 +24,10 @@ import {
 } from '../../data/finalSelectData';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import DateAdapter from '@mui/lab/AdapterMoment';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
+import TimePicker from '@mui/lab/TimePicker';
 import { FL } from '../../data/FLAirport';
 import ComputeButton from '../../components/ComputeButton';
 import ComputeOutput from '../ComputeOutput';
@@ -71,9 +75,9 @@ function Compute() {
 		corpCommercial: '',
 		internationalFlight: false,
 		iata: { label: '' },
-		etd: '',
-		timeFrom: '',
-		timeTo: '',
+		etd: new Date(),
+		timeFrom: null,
+		timeTo: null,
 		customer: '',
 		supplier: '',
 		ipal: { label: '' },
@@ -174,314 +178,339 @@ function Compute() {
 	const iataObject = FL.find((fl) => fl.IATA === iata.label);
 	if (input) {
 		return (
-			<Box
-				component="main"
-				sx={{
-					backgroundColor: '#f1f1f1',
-					flexGrow: 1,
-					height: '100vh',
-					overflow: 'auto',
-					pt: '120px',
-					pr: '32px',
-					pl: '32px'
-				}}
-			>
-				<Accordion expanded={expanded.includes('panel1')} onChange={handleChange('panel1')}>
-					<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>Transaction Type</Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<FormGroup sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-							<FormControlLabel
-								control={
-									<Checkbox
-										checked={intoPlane}
-										onChange={handleTrasactionCheckboxChange}
-										name="intoPlane"
-									/>
-								}
-								label="Into-Plane"
-							/>
-							<FormControlLabel
-								control={
-									<Checkbox
-										checked={intoTruck}
-										onChange={handleTrasactionCheckboxChange}
-										name="intoTruck"
-									/>
-								}
-								label="Into-Truck"
-							/>
-							<FormControlLabel
-								control={
-									<Checkbox
-										checked={intoTank}
-										onChange={handleTrasactionCheckboxChange}
-										name="intoTank"
-									/>
-								}
-								label="Into-Tank"
-							/>
-						</FormGroup>
-					</AccordionDetails>
-				</Accordion>
-				<Accordion expanded={expanded.includes('panel2')} onChange={handleChange('panel2')}>
-					<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>Location</Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<Box sx={{ display: 'flex' }}>
-							<Box sx={{ flexGrow: 0.5 }}>
-								<Grid container spacing={3} sx={{ flexDirection: 'column' }}>
-									<Grid item xs={12} md={6} lg={3}>
-										<BasicAutocomplete
-											label={'IATA/ICAO'}
-											value={iata}
-											handleChange={handleIATAChange}
-											options={[ ...IATAData, ...ICAOData ].filter((option) => {
-												return option.label !== '' && option.label !== undefined;
-											})}
-										/>
-									</Grid>
-									<Grid item xs={12} md={6} lg={3}>
-										<TextField
-											value={etd}
-											onChange={handleTextFieldChange('etd')}
-											label="ETD"
-											variant="outlined"
-										/>
-									</Grid>
-								</Grid>
-								<Grid container spacing={3} sx={{ pt: '24px' }}>
-									<Grid item xs={12} md={6} lg={2}>
-										<TextField
-											value={timeFrom}
-											onChange={handleTextFieldChange('timeFrom')}
-											label="Time From"
-											variant="outlined"
-										/>
-									</Grid>
-									<Grid item xs={12} md={6} lg={2}>
-										<TextField
-											value={timeTo}
-											onChange={handleTextFieldChange('timeTo')}
-											label="Time To"
-											variant="outlined"
-										/>
-									</Grid>
-								</Grid>
-							</Box>
-							<Box>
-								{!isEmpty(iata.label) && (
-									<Box>
-										<Typography>{iataObject.AirportName || ''}</Typography>
-										<Typography>{iataObject.County || ''}</Typography>
-										<Typography>{iataObject.State || 'Florida'}</Typography>
-										<Typography>{iataObject.Country || 'USA'}</Typography>
-									</Box>
-								)}
-							</Box>
-						</Box>
-					</AccordionDetails>
-				</Accordion>
-				<Accordion expanded={expanded.includes('panel3')} onChange={handleChange('panel3')}>
-					<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>Customs and Fuels</Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<FormGroup sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-							<FormControlLabel
-								control={
-									<Checkbox
-										checked={commercial}
-										onChange={handleCustomsCheckboxChange}
-										name="commercial"
-									/>
-								}
-								label="Commercial"
-							/>
-							<FormControlLabel
-								control={
-									<Checkbox checked={bonded} onChange={handleCustomsCheckboxChange} name="bonded" />
-								}
-								label="Bonded"
-							/>
-							<FormControlLabel
-								control={
-									<Checkbox
-										checked={international}
-										onChange={handleCustomsCheckboxChange}
-										name="international"
-									/>
-								}
-								label="International"
-							/>
-							<FormControlLabel
-								control={
-									<Checkbox
-										checked={domestic}
-										onChange={handleCustomsCheckboxChange}
-										name="domestic"
-									/>
-								}
-								label="Domestic"
-							/>
-							<FormControlLabel
-								control={
-									<Checkbox
-										checked={dutyFree}
-										onChange={handleCustomsCheckboxChange}
-										name="dutyFree"
-									/>
-								}
-								label="Duty Free"
-							/>
-							<FormControlLabel
-								control={
-									<Checkbox
-										checked={dutyPaid}
-										onChange={handleCustomsCheckboxChange}
-										name="dutyPaid"
-									/>
-								}
-								label="Duty Paid"
-							/>
-							<FormControlLabel
-								control={<Checkbox checked={ftz} onChange={handleCustomsCheckboxChange} name="ftz" />}
-								label="FTZ"
-							/>
-						</FormGroup>
-						<Grid container spacing={3} sx={{ mt: '10px', mb: '10px' }}>
-							<Grid item xs={12} md={3}>
-								<BasicAutocomplete
-									label={'Fuel'}
-									value={fuelType}
-									handleChange={handleAutocompleteChange('fuelType')}
-									options={fuelTypeData}
-								/>
-							</Grid>
-						</Grid>
-					</AccordionDetails>
-				</Accordion>
-				<Accordion expanded={expanded.includes('panel4')} onChange={handleChange('panel4')}>
-					<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>
-							Aircraft and Flight Service
-						</Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<Grid container spacing={3} sx={{ mb: '10px' }}>
-							<Grid item xs={12} md={6} lg={3}>
-								<BasicAutocomplete
-									label={'Aircraft Type'}
-									value={aircraftType}
-									handleChange={handleAutocompleteChange('aircraftType')}
-									options={aircraftTypeData}
-								/>
-							</Grid>
-							<Grid item xs={12} md={6} lg={3}>
-								<BasicAutocomplete
-									label={'Flight Service Type'}
-									value={flightServiceType}
-									handleChange={handleAutocompleteChange('flightServiceType')}
-									options={flightServiceTypeData}
-								/>
-							</Grid>
-							<Grid item xs={12} md={6} lg={3}>
-								<BasicSelect
-									label={'Corp/Commercial'}
-									value={corpCommercial}
-									handleChange={handleSelectChange('corpCommercial')}
-									options={[
-										{ value: 'Corporate', name: 'Corporate' },
-										{ value: 'Commercial', name: 'Commercial' }
-									]}
-								/>
-							</Grid>
-							<Grid item xs={12} md={6} lg={3}>
+			<LocalizationProvider dateAdapter={DateAdapter}>
+				<Box
+					component="main"
+					sx={{
+						backgroundColor: '#f1f1f1',
+						flexGrow: 1,
+						height: '100vh',
+						overflow: 'auto',
+						pt: '120px',
+						pr: '32px',
+						pl: '32px'
+					}}
+				>
+					<Accordion expanded={expanded.includes('panel1')} onChange={handleChange('panel1')}>
+						<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+							<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>
+								Transaction Type
+							</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
 								<FormControlLabel
 									control={
 										<Checkbox
-											checked={internationalFlight}
-											onChange={handleIntFlightCheckboxChange}
+											checked={intoPlane}
+											onChange={handleTrasactionCheckboxChange}
+											name="intoPlane"
 										/>
 									}
-									label="International Flight"
+									sx={{ flex: 0.2 }}
+									label="Into-Plane"
 								/>
-							</Grid>
-						</Grid>
-					</AccordionDetails>
-				</Accordion>
-				<Accordion expanded={expanded.includes('panel5')} onChange={handleChange('panel5')}>
-					<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>
-							Customer and Supplier
-						</Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<Grid container spacing={3}>
-							<Grid item xs={12} md={6} lg={2}>
-								<BasicSelect
-									label={'Customer'}
-									value={customer}
-									handleChange={handleSelectChange('customer')}
-									options={customerData}
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={intoTruck}
+											onChange={handleTrasactionCheckboxChange}
+											name="intoTruck"
+										/>
+									}
+									sx={{ flex: 0.2 }}
+									label="Into-Truck"
 								/>
-							</Grid>
-							<Grid item xs={12} md={6} lg={2}>
-								<BasicSelect
-									label={'Supplier'}
-									value={supplier}
-									handleChange={handleSelectChange('supplier')}
-									options={supplierData}
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={intoTank}
+											onChange={handleTrasactionCheckboxChange}
+											name="intoTank"
+										/>
+									}
+									label="Into-Tank"
 								/>
-							</Grid>
-							<Grid item xs={12} md={6} lg={2}>
-								<BasicAutocomplete
-									label={'Into-Plane Agent'}
-									value={ipal}
-									handleChange={handleAutocompleteChange('ipal')}
-									options={ipalData}
+							</FormGroup>
+						</AccordionDetails>
+					</Accordion>
+					<Accordion expanded={expanded.includes('panel2')} onChange={handleChange('panel2')}>
+						<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+							<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>Location</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<Box sx={{ display: 'flex' }}>
+								<Box sx={{ flexGrow: 0.5 }}>
+									<Grid container spacing={3} sx={{ flexDirection: 'column' }}>
+										<Grid item xs={12} md={6} lg={3}>
+											<BasicAutocomplete
+												label={'IATA/ICAO'}
+												value={iata}
+												handleChange={handleIATAChange}
+												options={[ ...IATAData, ...ICAOData ].filter((option) => {
+													return option.label !== '' && option.label !== undefined;
+												})}
+											/>
+										</Grid>
+										<Grid item xs={12} md={6} lg={3}>
+											<DatePicker
+												label="ETD"
+												value={etd}
+												onChange={(newValue) => {
+													setState({ ...state, etd: newValue });
+												}}
+												renderInput={(params) => <TextField {...params} />}
+											/>
+										</Grid>
+									</Grid>
+									<Grid container spacing={3} sx={{ pt: '24px' }}>
+										<Grid item xs={12} md={6} lg={2}>
+											<TimePicker
+												label="Time From"
+												value={timeFrom}
+												onChange={(newValue) => {
+													setState({ ...state, timeFrom: newValue });
+												}}
+												renderInput={(params) => <TextField {...params} />}
+											/>
+										</Grid>
+										<Grid item xs={12} md={6} lg={2}>
+											<TimePicker
+												label="Time To"
+												value={timeTo}
+												onChange={(newValue) => {
+													setState({ ...state, timeTo: newValue });
+												}}
+												renderInput={(params) => <TextField {...params} />}
+											/>
+										</Grid>
+									</Grid>
+								</Box>
+								<Box>
+									{!isEmpty(iata.label) && (
+										<Box>
+											<Typography>{iataObject.AirportName || ''}</Typography>
+											<Typography>{iataObject.County || ''}</Typography>
+											<Typography>{iataObject.State || 'Florida'}</Typography>
+											<Typography>{iataObject.Country || 'USA'}</Typography>
+										</Box>
+									)}
+								</Box>
+							</Box>
+						</AccordionDetails>
+					</Accordion>
+					<Accordion expanded={expanded.includes('panel3')} onChange={handleChange('panel3')}>
+						<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+							<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>
+								Customs and Fuels
+							</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<FormGroup sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={commercial}
+											onChange={handleCustomsCheckboxChange}
+											name="commercial"
+										/>
+									}
+									label="Commercial"
 								/>
-							</Grid>
-							<Grid item xs={12} md={6} lg={2}>
-								<TextField
-									value={fuelQty}
-									onChange={handleTextFieldChange('fuelQty')}
-									label="Fuel Qty"
-									variant="outlined"
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={bonded}
+											onChange={handleCustomsCheckboxChange}
+											name="bonded"
+										/>
+									}
+									label="Bonded"
 								/>
-							</Grid>
-							<Grid item xs={12} md={6} lg={2}>
-								<BasicAutocomplete
-									label={'Required UOM'}
-									value={ruom}
-									handleChange={handleAutocompleteChange('ruom')}
-									options={uomData}
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={international}
+											onChange={handleCustomsCheckboxChange}
+											name="international"
+										/>
+									}
+									label="International"
 								/>
-							</Grid>
-							<Grid item xs={12} md={6} lg={2}>
-								<BasicAutocomplete
-									label={'Required Currency'}
-									value={rcurr}
-									handleChange={handleAutocompleteChange('rcurr')}
-									options={[ { label: 'INR' }, { label: 'USD' }, { label: 'GBP' }, { label: 'EUR' } ]}
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={domestic}
+											onChange={handleCustomsCheckboxChange}
+											name="domestic"
+										/>
+									}
+									label="Domestic"
 								/>
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={dutyFree}
+											onChange={handleCustomsCheckboxChange}
+											name="dutyFree"
+										/>
+									}
+									label="Duty Free"
+								/>
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={dutyPaid}
+											onChange={handleCustomsCheckboxChange}
+											name="dutyPaid"
+										/>
+									}
+									label="Duty Paid"
+								/>
+								<FormControlLabel
+									control={
+										<Checkbox checked={ftz} onChange={handleCustomsCheckboxChange} name="ftz" />
+									}
+									label="FTZ"
+								/>
+							</FormGroup>
+							<Grid container spacing={3} sx={{ mt: '10px', mb: '10px' }}>
+								<Grid item xs={12} md={3}>
+									<BasicAutocomplete
+										label={'Fuel'}
+										value={fuelType}
+										handleChange={handleAutocompleteChange('fuelType')}
+										options={fuelTypeData}
+									/>
+								</Grid>
 							</Grid>
-						</Grid>
-					</AccordionDetails>
-				</Accordion>
-				<Box sx={{ display: 'flex', alignItems: 'flex-end', mt: '10px', mb: '10px' }}>
-					<ComputeButton
-						sx={{ ml: 'auto' }}
-						onClick={() => {
-							setInput(false);
-						}}
-					>
-						Compute Taxes and Fees
-					</ComputeButton>
+						</AccordionDetails>
+					</Accordion>
+					<Accordion expanded={expanded.includes('panel4')} onChange={handleChange('panel4')}>
+						<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+							<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>
+								Aircraft and Flight Service
+							</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<Grid container spacing={3} sx={{ mb: '10px' }}>
+								<Grid item xs={12} md={6} lg={3}>
+									<BasicAutocomplete
+										label={'Aircraft Type'}
+										value={aircraftType}
+										handleChange={handleAutocompleteChange('aircraftType')}
+										options={aircraftTypeData}
+									/>
+								</Grid>
+								<Grid item xs={12} md={6} lg={3}>
+									<BasicAutocomplete
+										label={'Flight Service Type'}
+										value={flightServiceType}
+										handleChange={handleAutocompleteChange('flightServiceType')}
+										options={flightServiceTypeData}
+									/>
+								</Grid>
+								<Grid item xs={12} md={6} lg={3}>
+									<BasicSelect
+										label={'Corp/Commercial'}
+										value={corpCommercial}
+										handleChange={handleSelectChange('corpCommercial')}
+										options={[
+											{ value: 'Corporate', name: 'Corporate' },
+											{ value: 'Commercial', name: 'Commercial' }
+										]}
+									/>
+								</Grid>
+								<Grid item xs={12} md={6} lg={3}>
+									<FormControlLabel
+										control={
+											<Checkbox
+												checked={internationalFlight}
+												onChange={handleIntFlightCheckboxChange}
+											/>
+										}
+										label="International Flight"
+									/>
+								</Grid>
+							</Grid>
+						</AccordionDetails>
+					</Accordion>
+					<Accordion expanded={expanded.includes('panel5')} onChange={handleChange('panel5')}>
+						<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+							<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>
+								Customer and Supplier
+							</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<Grid container spacing={3}>
+								<Grid item xs={12} md={6} lg={2}>
+									<BasicSelect
+										label={'Customer'}
+										value={customer}
+										handleChange={handleSelectChange('customer')}
+										options={customerData}
+									/>
+								</Grid>
+								<Grid item xs={12} md={6} lg={2}>
+									<BasicSelect
+										label={'Supplier'}
+										value={supplier}
+										handleChange={handleSelectChange('supplier')}
+										options={supplierData}
+									/>
+								</Grid>
+								<Grid item xs={12} md={6} lg={2}>
+									<BasicAutocomplete
+										label={'Into-Plane Agent'}
+										value={ipal}
+										handleChange={handleAutocompleteChange('ipal')}
+										options={ipalData}
+									/>
+								</Grid>
+								<Grid item xs={12} md={6} lg={2}>
+									<TextField
+										value={fuelQty}
+										onChange={handleTextFieldChange('fuelQty')}
+										label="Fuel Qty"
+										variant="outlined"
+									/>
+								</Grid>
+								<Grid item xs={12} md={6} lg={2}>
+									<BasicAutocomplete
+										label={'Required UOM'}
+										value={ruom}
+										handleChange={handleAutocompleteChange('ruom')}
+										options={uomData}
+									/>
+								</Grid>
+								<Grid item xs={12} md={6} lg={2}>
+									<BasicAutocomplete
+										label={'Required Currency'}
+										value={rcurr}
+										handleChange={handleAutocompleteChange('rcurr')}
+										options={[
+											{ label: 'INR' },
+											{ label: 'USD' },
+											{ label: 'GBP' },
+											{ label: 'EUR' }
+										]}
+									/>
+								</Grid>
+							</Grid>
+						</AccordionDetails>
+					</Accordion>
+					<Box sx={{ display: 'flex', alignItems: 'flex-end', mt: '10px', mb: '10px' }}>
+						<ComputeButton
+							sx={{ ml: 'auto' }}
+							onClick={() => {
+								setInput(false);
+							}}
+						>
+							Compute Taxes and Fees
+						</ComputeButton>
+					</Box>
 				</Box>
-			</Box>
+			</LocalizationProvider>
 		);
 	}
 	return <ComputeOutput state={state} />;

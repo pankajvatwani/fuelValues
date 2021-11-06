@@ -76,7 +76,7 @@ function Layout(props) {
 								flexDirection: 'column'
 							}}
 						>
-							<Avatar variant="square" src={Logo} sx={{ minWidth: '130px' }} />
+							<Avatar variant="square" src={Logo} sx={{ minWidth: '200px' }} />
 						</div>
 						<IconButton
 							sx={{
