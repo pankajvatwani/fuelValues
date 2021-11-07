@@ -9,22 +9,28 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { forwardTo } from './utils';
+import { withRouter } from 'react-router-dom';
+import { Box } from '@mui/system';
 class MainListItems extends React.Component {
 	render() {
+		const { pathname } = this.props.location;
 		return (
-			<div>
+			<Box
+				sx={{
+					'& .Mui-selected': {
+						backgroundColor: '#F5874A !important',
+						color: 'white',
+						'& svg': {
+							color: 'white'
+						}
+					}
+				}}
+			>
 				<ListItem
 					button
 					sx={{
 						display: 'flex',
-						flexDirection: 'column',
-						'&:hover': {
-							backgroundColor: '#F5874A',
-							color: 'white',
-							'& svg': {
-								color: 'white'
-							}
-						}
+						flexDirection: 'column'
 					}}
 				>
 					<ListItemIcon sx={{ minWidth: '24px' }}>
@@ -41,16 +47,10 @@ class MainListItems extends React.Component {
 				</ListItem>
 				<ListItem
 					button
+					selected={pathname === '/taxes'}
 					sx={{
 						display: 'flex',
-						flexDirection: 'column',
-						'&:hover': {
-							backgroundColor: '#F5874A',
-							color: 'white',
-							'& svg': {
-								color: 'white'
-							}
-						}
+						flexDirection: 'column'
 					}}
 					onClick={() => {
 						forwardTo('/taxes');
@@ -70,16 +70,10 @@ class MainListItems extends React.Component {
 				</ListItem>
 				<ListItem
 					button
+					selected={pathname === '/compute'}
 					sx={{
 						display: 'flex',
-						flexDirection: 'column',
-						'&:hover': {
-							backgroundColor: '#F5874A',
-							color: 'white',
-							'& svg': {
-								color: 'white'
-							}
-						}
+						flexDirection: 'column'
 					}}
 					onClick={() => {
 						forwardTo('/compute');
@@ -102,14 +96,7 @@ class MainListItems extends React.Component {
 					button
 					sx={{
 						display: 'flex',
-						flexDirection: 'column',
-						'&:hover': {
-							backgroundColor: '#F5874A',
-							color: 'white',
-							'& svg': {
-								color: 'white'
-							}
-						}
+						flexDirection: 'column'
 					}}
 				>
 					<ListItemIcon sx={{ minWidth: '24px' }}>
@@ -128,14 +115,7 @@ class MainListItems extends React.Component {
 					button
 					sx={{
 						display: 'flex',
-						flexDirection: 'column',
-						'&:hover': {
-							backgroundColor: '#F5874A',
-							color: 'white',
-							'& svg': {
-								color: 'white'
-							}
-						}
+						flexDirection: 'column'
 					}}
 				>
 					<ListItemIcon sx={{ minWidth: '24px' }}>
@@ -154,14 +134,7 @@ class MainListItems extends React.Component {
 					button
 					sx={{
 						display: 'flex',
-						flexDirection: 'column',
-						'&:hover': {
-							backgroundColor: '#F5874A',
-							color: 'white',
-							'& svg': {
-								color: 'white'
-							}
-						}
+						flexDirection: 'column'
 					}}
 				>
 					<ListItemIcon sx={{ minWidth: '24px' }}>
@@ -176,9 +149,9 @@ class MainListItems extends React.Component {
 						primary="Settings"
 					/>
 				</ListItem>
-			</div>
+			</Box>
 		);
 	}
 }
 
-export default MainListItems;
+export default withRouter(MainListItems);

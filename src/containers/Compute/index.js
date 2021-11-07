@@ -473,6 +473,7 @@ function Compute() {
 										onChange={handleTextFieldChange('fuelQty')}
 										label="Fuel Qty"
 										variant="outlined"
+										type="number"
 									/>
 								</Grid>
 								<Grid item xs={12} md={6} lg={2}>
@@ -513,7 +514,14 @@ function Compute() {
 			</LocalizationProvider>
 		);
 	}
-	return <ComputeOutput state={state} />;
+	return (
+		<ComputeOutput
+			state={state}
+			back={() => {
+				setInput(true);
+			}}
+		/>
+	);
 }
 
 export default Compute;

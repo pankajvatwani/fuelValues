@@ -18,7 +18,7 @@ import {
 	IATAData,
 	ICAOData,
 	stateData,
-	supplierData,
+	supplierData
 	// taxData
 } from '../../data/finalSelectData';
 
@@ -143,8 +143,8 @@ function Taxes() {
 						</Grid>
 						<Grid container spacing={3} sx={{ mb: 2, pr: 1, pl: 1 }}>
 							<Grid item xs={12} md={6} lg={4} sx={{ ml: 'auto' }}>
-								<Link>
-								 Advanced Search
+								<Link sx={{ color: '#6D6D6F', textDecoration: 'none', cursor: 'pointer' }}>
+									Advanced Search
 								</Link>
 							</Grid>
 						</Grid>
