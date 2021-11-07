@@ -42,6 +42,14 @@ export default function ComputeOutputTable({ rows, isFees }) {
 							}}
 							align="right"
 						>
+							Actual Currency
+						</TableCell>
+						<TableCell
+							sx={{
+								color: '#F5874A'
+							}}
+							align="right"
+						>
 							Unit Price
 						</TableCell>
 						<TableCell
@@ -75,13 +83,18 @@ export default function ComputeOutputTable({ rows, isFees }) {
 								{row.RequestedUOM}
 							</TableCell>
 							<TableCell sx={{ fontWeight: 'bold' }} align="right">
+								{'USD'}
+							</TableCell>
+							<TableCell sx={{ fontWeight: 'bold' }} align="right">
+								{'$'}
 								{row.UnitPrice}
 							</TableCell>
 							<TableCell sx={{ fontWeight: 'bold' }} align="right">
 								{row.Quantity}
 							</TableCell>
 							<TableCell sx={{ fontWeight: 'bold' }} align="right">
-								{row.Total}
+								{'$'}
+								{Number(row.Total).toFixed(6)}
 							</TableCell>
 						</TableRow>
 					))}

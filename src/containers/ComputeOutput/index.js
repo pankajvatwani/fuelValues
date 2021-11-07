@@ -15,6 +15,7 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import moment from 'moment';
 function ComputeOutput({ state }) {
 	const {
 		intoPlane,
@@ -68,6 +69,19 @@ function ComputeOutput({ state }) {
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
+
+	const taxTotal = () => {
+		let sum = 20;
+		computed.TaxCustomer.map((a) => (sum += Number(a.Total)));
+		return sum;
+	};
+
+	const feeTotal = () => {
+		let sum = 20;
+		computed.FeesCustomer.map((a) => (sum += Number(a.Total)));
+		return sum;
+	};
+
 	return (
 		<Box
 			component="main"
@@ -90,27 +104,37 @@ function ComputeOutput({ state }) {
 				<AccordionDetails>
 					<Box>
 						<Grid container>
-							<Grid item xs={12} md={6}>
+							<Grid item xs={12} md={6} lg={4}>
 								<List sx={{ width: '100%', bgcolor: 'background.paper' }}>
 									<BasicListItem type={'Transaction Type'} value={transactionType} />
 									<BasicListItem type={'IATA'} value={iata.label} />
-									<BasicListItem type={'ETD'} value={etd} />
-									<BasicListItem type={'Time From'} value={timeFrom} />
-									<BasicListItem type={'Time To'} value={timeTo} />
+									<BasicListItem type={'ETD'} value={moment(etd).format('MMM Do YY')} />
+									<BasicListItem
+										type={'Time From'}
+										value={moment(timeFrom).format('MMMM Do YYYY, h:mm:ss a')}
+									/>
+									<BasicListItem
+										type={'Time To'}
+										value={moment(timeTo).format('MMMM Do YYYY, h:mm:ss a')}
+									/>
 									<BasicListItem type={'Customs'} value={customs} />
+								</List>
+							</Grid>
+							<Grid item xs={12} md={6} lg={4}>
+								<List sx={{ width: '100%', bgcolor: 'background.paper' }}>
 									<BasicListItem type={'Fuel'} value={fuelType.label} />
 									<BasicListItem type={'AirCraft Type'} value={aircraftType.label} />
 									<BasicListItem type={'FlightService Type'} value={flightServiceType.label} />
-								</List>
-							</Grid>
-							<Grid item xs={12} md={6}>
-								<List sx={{ width: '100%', bgcolor: 'background.paper' }}>
 									<BasicListItem type={'Corp/Commercial'} value={corpCommercial} />
 									<BasicListItem
 										type={'International Flight'}
 										value={internationalFlight ? 'Yes' : 'No'}
 									/>
 									<BasicListItem type={'Customer'} value={customer} />
+								</List>
+							</Grid>
+							<Grid item xs={12} md={6} lg={4}>
+								<List sx={{ width: '100%', bgcolor: 'background.paper' }}>
 									<BasicListItem type={'Supplier'} value={supplier} />
 									<BasicListItem type={'Into-Plane Agent'} value={ipal.label} />
 									<BasicListItem type={'Fuel Qty'} value={fuelQty} />
@@ -126,42 +150,105 @@ function ComputeOutput({ state }) {
 			<Box sx={{ width: '100%', typography: 'body1', mt: '10px' }}>
 				<TabContext value={value}>
 					<Box sx={{ borderColor: 'divider', pl: '24px' }}>
-						<TabList onChange={handleChange}>
+						<TabList
+							sx={{ '& .Mui-selected': { color: 'white !important', backgroundColor: '#4F85D7' } }}
+							onChange={handleChange}
+						>
 							<Tab label="Customer" value="1" />
 							<Tab label="Supplier/Agents" value="2" />
 						</TabList>
 					</Box>
 					<TabPanel value="1">
-						<PanelTemplate header={`Taxes`}>
-							<Grid container spacing={3}>
-								<Grid item xs={12}>
-									<ComputedOutputTable rows={computed.TaxCustomer} />
+						<Box>
+							<PanelTemplate header={`Taxes`}>
+								<Grid container spacing={3}>
+									<Grid item xs={12}>
+										<ComputedOutputTable rows={computed.TaxCustomer} />
+									</Grid>
 								</Grid>
-							</Grid>
-						</PanelTemplate>
-						<PanelTemplate header={`Fees`}>
-							<Grid container spacing={3}>
-								<Grid item xs={12}>
-									<ComputedOutputTable isFees={true} rows={computed.FeesCustomer} />
+							</PanelTemplate>
+							<Box
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'center',
+									flexDirection: 'column'
+								}}
+							>
+								<Box sx={{ fontWeight: 700, pt: '8px' }}>Flat Tax - $20</Box>
+								<Box sx={{ fontWeight: 700, pt: '8px' }}>
+									Total Taxes Including Flat Tax- ${taxTotal().toFixed(6)}
+								</Box>
+							</Box>
+						</Box>
+						<Box>
+							<PanelTemplate header={`Fees`}>
+								<Grid container spacing={3}>
+									<Grid item xs={12}>
+										<ComputedOutputTable isFees={true} rows={computed.FeesCustomer} />
+									</Grid>
 								</Grid>
-							</Grid>
-						</PanelTemplate>
+							</PanelTemplate>
+							<Box
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'center',
+									flexDirection: 'column'
+								}}
+							>
+								<Box sx={{ fontWeight: 700, pt: '8px' }}>Flat Fee - $20</Box>
+								<Box sx={{ fontWeight: 700, pt: '8px' }}>
+									Total Fees Including Flat Fee - ${feeTotal().toFixed(6)}
+								</Box>
+							</Box>
+						</Box>
 					</TabPanel>
 					<TabPanel value="2">
-						<PanelTemplate header={`Taxes`}>
-							<Grid container spacing={3}>
-								<Grid item xs={12}>
-									<ComputedOutputTable rows={computed.TaxSupplier} />
+						<Box>
+							<PanelTemplate header={`Taxes`}>
+								<Grid container spacing={3}>
+									<Grid item xs={12}>
+										<ComputedOutputTable rows={computed.TaxSupplier} />
+									</Grid>
 								</Grid>
-							</Grid>
-						</PanelTemplate>
-						<PanelTemplate header={`Fees`}>
-							<Grid container spacing={3}>
-								<Grid item xs={12}>
-									<ComputedOutputTable isFees={true} rows={computed.FeesVendors} />
+							</PanelTemplate>
+							<Box
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'center',
+									flexDirection: 'column'
+								}}
+							>
+								<Box sx={{ fontWeight: 700, pt: '8px' }}>Flat Tax - $20</Box>
+								<Box sx={{ fontWeight: 700, pt: '8px' }}>
+									Total Taxes Including Flat Tax- ${taxTotal().toFixed(6)}
+								</Box>
+							</Box>
+						</Box>
+						<Box>
+							<PanelTemplate header={`Fees`}>
+								<Grid container spacing={3}>
+									<Grid item xs={12}>
+										<ComputedOutputTable isFees={true} rows={computed.FeesVendors} />
+									</Grid>
 								</Grid>
-							</Grid>
-						</PanelTemplate>
+							</PanelTemplate>
+							<Box
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'center',
+									flexDirection: 'column'
+								}}
+							>
+								<Box sx={{ fontWeight: 700, pt: '8px' }}>Flat Fee - $20</Box>
+								<Box sx={{ fontWeight: 700, pt: '8px' }}>
+									Total Fees Including Flat Fee - ${feeTotal().toFixed(6)}
+								</Box>
+							</Box>
+						</Box>
 					</TabPanel>
 				</TabContext>
 			</Box>

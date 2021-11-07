@@ -4,6 +4,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import CircleIcon from '@mui/icons-material/Circle';
+import { Box } from '@mui/material';
 
 function BasicListItem({ type, value }) {
 	return (
@@ -12,7 +13,10 @@ function BasicListItem({ type, value }) {
 				<ListItemIcon>
 					<CircleIcon fontSize="small" />
 				</ListItemIcon>
-				<ListItemText sx={{ '& span': { fontWeight: 700 } }} primary={`${type} : ${value}`} />
+				<Box sx={{ display: 'flex', flexDirection: 'row' }}>
+					<ListItemText sx={{ '& span': { fontWeight: 700 } }} primary={`${type} : `} />
+					<ListItemText primary={`${value}`} />
+				</Box>
 			</ListItemButton>
 		</ListItem>
 	);
