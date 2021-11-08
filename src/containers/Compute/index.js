@@ -32,7 +32,7 @@ import { FL } from '../../data/FLAirport';
 import ComputeButton from '../../components/ComputeButton';
 import ComputeOutput from '../ComputeOutput';
 
-function Compute() {
+function Compute({ isCreate = false }) {
 	const [ expanded, setExpanded ] = React.useState([ 'panel1', 'panel2', 'panel3', 'panel4', 'panel5' ]);
 
 	const handleChange = (panel) => (event, isExpanded) => {
@@ -186,9 +186,13 @@ function Compute() {
 						flexGrow: 1,
 						height: '100vh',
 						overflow: 'auto',
-						pt: '120px',
 						pr: '32px',
-						pl: '32px'
+						pl: '32px',
+						pt: '16px',
+						pb: '16px',
+						...(!isCreate && {
+							pt: '120px'
+						})
 					}}
 				>
 					<Accordion expanded={expanded.includes('panel1')} onChange={handleChange('panel1')}>
@@ -500,16 +504,18 @@ function Compute() {
 							</Grid>
 						</AccordionDetails>
 					</Accordion>
-					<Box sx={{ display: 'flex', alignItems: 'flex-end', mt: '10px', mb: '10px' }}>
-						<ComputeButton
-							sx={{ ml: 'auto' }}
-							onClick={() => {
-								setInput(false);
-							}}
-						>
-							Compute Taxes and Fees
-						</ComputeButton>
-					</Box>
+					{!isCreate && (
+						<Box sx={{ display: 'flex', alignItems: 'flex-end', mt: '10px', mb: '10px' }}>
+							<ComputeButton
+								sx={{ ml: 'auto' }}
+								onClick={() => {
+									setInput(false);
+								}}
+							>
+								Compute Taxes and Fees
+							</ComputeButton>
+						</Box>
+					)}
 				</Box>
 			</LocalizationProvider>
 		);

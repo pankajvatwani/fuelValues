@@ -3,6 +3,8 @@ import clsx from 'clsx';
 import { withStyles } from '@mui/styles';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
+import AddIcon from '@mui/icons-material/Add';
+import { IconButton } from '@mui/material';
 
 const styles = (theme) => ({
 	mainPaper: {
@@ -22,7 +24,9 @@ const styles = (theme) => ({
 	},
 	greyHeader: {
 		background: '#6D6D6F',
-		color: 'white'
+		color: 'white',
+		display: 'flex',
+		justifyContent: 'space-between'
 	}
 });
 
@@ -34,6 +38,12 @@ class PanelTemplate extends Component {
 			<Paper square className={classNames} variant="outlined">
 				<Typography component="div" className={clsx(classes.paperHeader, grey && classes.greyHeader)}>
 					{header}
+					{grey && (
+						<IconButton onClick={this.props.openDialog}>
+							{' '}
+							<AddIcon sx={{ color: 'white' }} />{' '}
+						</IconButton>
+					)}
 				</Typography>
 				{children}
 			</Paper>

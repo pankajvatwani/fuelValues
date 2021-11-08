@@ -10,6 +10,7 @@ import BasicSelect from '../../components/common/BasicSelect';
 import BasicTable from '../../components/common/BasicTable';
 import CustomButton from '../../components/common/CustomButton';
 import BasicAutocomplete from '../../components/common/BasicAutocomplete';
+import BasicDialog from '../../components/common/BasicDialog';
 import { states } from '../../data/states';
 import { get } from 'lodash';
 import {
@@ -28,6 +29,7 @@ function Taxes() {
 	const [ state, setState ] = React.useState('');
 	// const [ tax, setTax ] = React.useState('');
 	const [ customer, setCustomer ] = React.useState('');
+	const [ openCreateDialog, setOpenCreateDialog ] = React.useState(false);
 	const [ supplier, setSupplier ] = React.useState('');
 	const [ iata, setIata ] = React.useState({ label: '' });
 	const handleCountryChange = (e) => {
@@ -153,6 +155,7 @@ function Taxes() {
 						<PanelTemplate
 							header={`United States, ${state}-${get(stateSelected, 'statename', '')}`}
 							grey={true}
+							openDialog={() => setOpenCreateDialog(true)}
 						>
 							<Grid container spacing={3}>
 								<Grid item xs={12}>
@@ -160,6 +163,14 @@ function Taxes() {
 								</Grid>
 							</Grid>
 						</PanelTemplate>
+					)}
+					{openCreateDialog && (
+						<BasicDialog
+							open={openCreateDialog}
+							handleClose={() => {
+								setOpenCreateDialog(false);
+							}}
+						/>
 					)}
 				</Grid>
 			</Grid>
