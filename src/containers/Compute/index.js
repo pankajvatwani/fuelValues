@@ -14,12 +14,14 @@ import BasicSelect from '../../components/common/BasicSelect';
 import {
 	aircraftTypeData,
 	customerData,
+	fbData,
 	flightServiceTypeData,
 	fuelTypeData,
 	IATAData,
 	ICAOData,
 	ipalData,
 	supplierData,
+	taxData,
 	uomData
 } from '../../data/finalSelectData';
 import Grid from '@mui/material/Grid';
@@ -31,9 +33,22 @@ import TimePicker from '@mui/lab/TimePicker';
 import { FL } from '../../data/FLAirport';
 import ComputeButton from '../../components/ComputeButton';
 import ComputeOutput from '../ComputeOutput';
-
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import ListItemText from '@mui/material/ListItemText';
+import Select from '@mui/material/Select';
 function Compute({ isCreate = false }) {
-	const [ expanded, setExpanded ] = React.useState([ 'panel1', 'panel2', 'panel3', 'panel4', 'panel5' ]);
+	const [ expanded, setExpanded ] = React.useState([
+		'panel1',
+		'panel2',
+		'panel3',
+		'panel4',
+		'panel5',
+		'panel6',
+		'panel7'
+	]);
 
 	const handleChange = (panel) => (event, isExpanded) => {
 		if (isExpanded) {
@@ -56,6 +71,8 @@ function Compute({ isCreate = false }) {
 		'dutyPaid',
 		'ftz'
 	];
+
+	const taxDefinitions = [ 'singleTax', 'taxOnItems' ];
 
 	const [ state, setState ] = React.useState({
 		intoPlane: true,
@@ -83,7 +100,23 @@ function Compute({ isCreate = false }) {
 		ipal: { label: '' },
 		fuelQty: '',
 		ruom: { label: '' },
-		rcurr: { label: '' }
+		rcurr: { label: '' },
+		singleTax: false,
+		taxOnItems: false,
+		taxItems: { label: '' },
+		uom: { label: '' },
+		fb: { label: '' },
+		formulaType: '',
+		taxRate: '',
+		curr: { label: '' },
+		taxAuthority: { label: '' },
+		jurisdiction: { label: '' },
+		ccustomer: '',
+		effFrom: new Date(),
+		notes: '',
+		exemptFromInternationalFlight: false,
+		taxOnItemsArray: [],
+		exemptCustomers: []
 	});
 
 	const [ input, setInput ] = React.useState(true);
@@ -111,6 +144,18 @@ function Compute({ isCreate = false }) {
 		});
 	};
 
+	const handleTaxDefinitionCheckboxChange = (event) => {
+		let customsState = cloneDeep(state);
+		taxDefinitions.map((key, index) => {
+			customsState[key] = false;
+			return null;
+		});
+		setState({
+			...customsState,
+			[event.target.name]: event.target.checked
+		});
+	};
+
 	const handleAutocompleteChange = (key) => (e, newValue) => {
 		setState({
 			...state,
@@ -125,10 +170,10 @@ function Compute({ isCreate = false }) {
 		});
 	};
 
-	const handleIntFlightCheckboxChange = (event) => {
+	const handleCheckboxChange = (key) => (e) => {
 		setState({
 			...state,
-			internationalFlight: event.target.checked
+			[key]: e.target.checked
 		});
 	};
 
@@ -143,6 +188,15 @@ function Compute({ isCreate = false }) {
 		setState({
 			...state,
 			[key]: e.target.value
+		});
+	};
+
+	const handleArrayChange = (key) => (event) => {
+		const { target: { value } } = event;
+		const val = typeof value === 'string' ? value.split(',') : value;
+		setState({
+			...state,
+			[key]: val
 		});
 	};
 
@@ -172,9 +226,35 @@ function Compute({ isCreate = false }) {
 		ipal,
 		fuelQty,
 		ruom,
-		rcurr
+		rcurr,
+		singleTax,
+		taxOnItems,
+		taxItems,
+		formulaType,
+		uom,
+		fb,
+		taxRate,
+		curr,
+		taxAuthority,
+		jurisdiction,
+		ccustomer,
+		effFrom,
+		notes,
+		exemptFromInternationalFlight,
+		taxOnItemsArray,
+		exemptCustomers
 	} = state;
 
+	const ITEM_HEIGHT = 48;
+	const ITEM_PADDING_TOP = 8;
+	const MenuProps = {
+		PaperProps: {
+			style: {
+				maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+				width: 250
+			}
+		}
+	};
 	const iataObject = FL.find((fl) => fl.IATA === iata.label);
 	if (input) {
 		return (
@@ -182,16 +262,16 @@ function Compute({ isCreate = false }) {
 				<Box
 					component="main"
 					sx={{
-						backgroundColor: '#f1f1f1',
 						flexGrow: 1,
-						height: '100vh',
-						overflow: 'auto',
 						pr: '32px',
 						pl: '32px',
 						pt: '16px',
 						pb: '16px',
 						...(!isCreate && {
-							pt: '120px'
+							pt: '120px',
+							height: '100vh',
+							overflow: 'auto',
+							backgroundColor: '#f1f1f1'
 						})
 					}}
 				>
@@ -430,7 +510,7 @@ function Compute({ isCreate = false }) {
 										control={
 											<Checkbox
 												checked={internationalFlight}
-												onChange={handleIntFlightCheckboxChange}
+												onChange={handleCheckboxChange('internationalFlight')}
 											/>
 										}
 										label="International Flight"
@@ -439,71 +519,288 @@ function Compute({ isCreate = false }) {
 							</Grid>
 						</AccordionDetails>
 					</Accordion>
-					<Accordion expanded={expanded.includes('panel5')} onChange={handleChange('panel5')}>
-						<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-							<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>
-								Customer and Supplier
-							</Typography>
-						</AccordionSummary>
-						<AccordionDetails>
-							<Grid container spacing={3}>
-								<Grid item xs={12} md={6} lg={2}>
-									<BasicSelect
-										label={'Customer'}
-										value={customer}
-										handleChange={handleSelectChange('customer')}
-										options={customerData}
-									/>
+					{!isCreate && (
+						<Accordion expanded={expanded.includes('panel5')} onChange={handleChange('panel5')}>
+							<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+								<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>
+									Customer and Supplier
+								</Typography>
+							</AccordionSummary>
+							<AccordionDetails>
+								<Grid container spacing={3}>
+									<Grid item xs={12} md={6} lg={2}>
+										<BasicSelect
+											label={'Customer'}
+											value={customer}
+											handleChange={handleSelectChange('customer')}
+											options={customerData}
+										/>
+									</Grid>
+									<Grid item xs={12} md={6} lg={2}>
+										<BasicSelect
+											label={'Supplier'}
+											value={supplier}
+											handleChange={handleSelectChange('supplier')}
+											options={supplierData}
+										/>
+									</Grid>
+									<Grid item xs={12} md={6} lg={2}>
+										<BasicAutocomplete
+											label={'Into-Plane Agent'}
+											value={ipal}
+											handleChange={handleAutocompleteChange('ipal')}
+											options={ipalData}
+										/>
+									</Grid>
+									<Grid item xs={12} md={6} lg={2}>
+										<TextField
+											value={fuelQty}
+											onChange={handleTextFieldChange('fuelQty')}
+											label="Fuel Qty"
+											variant="outlined"
+											type="number"
+										/>
+									</Grid>
+									<Grid item xs={12} md={6} lg={2}>
+										<BasicAutocomplete
+											label={'Required UOM'}
+											value={ruom}
+											handleChange={handleAutocompleteChange('ruom')}
+											options={uomData}
+										/>
+									</Grid>
+									<Grid item xs={12} md={6} lg={2}>
+										<BasicAutocomplete
+											label={'Required Currency'}
+											value={rcurr}
+											handleChange={handleAutocompleteChange('rcurr')}
+											options={[
+												{ label: 'CAD' },
+												{ label: 'USD' },
+												{ label: 'GBP' },
+												{ label: 'EUR' }
+											]}
+										/>
+									</Grid>
 								</Grid>
-								<Grid item xs={12} md={6} lg={2}>
-									<BasicSelect
-										label={'Supplier'}
-										value={supplier}
-										handleChange={handleSelectChange('supplier')}
-										options={supplierData}
+							</AccordionDetails>
+						</Accordion>
+					)}
+					{isCreate && (
+						<Accordion expanded={expanded.includes('panel6')} onChange={handleChange('panel6')}>
+							<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+								<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>
+									Tax Defintions
+								</Typography>
+							</AccordionSummary>
+							<AccordionDetails>
+								<FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
+									<FormControlLabel
+										control={
+											<Checkbox
+												checked={singleTax}
+												onChange={handleTaxDefinitionCheckboxChange}
+												name="singleTax"
+											/>
+										}
+										sx={{ flex: 0.2 }}
+										label="Single Tax"
 									/>
-								</Grid>
-								<Grid item xs={12} md={6} lg={2}>
-									<BasicAutocomplete
-										label={'Into-Plane Agent'}
-										value={ipal}
-										handleChange={handleAutocompleteChange('ipal')}
-										options={ipalData}
+									<FormControlLabel
+										control={
+											<Checkbox
+												checked={taxOnItems}
+												onChange={handleTaxDefinitionCheckboxChange}
+												name="taxOnItems"
+											/>
+										}
+										sx={{ flex: 0.2 }}
+										label="Tax On Items (% basis)"
 									/>
+								</FormGroup>
+								<Grid container spacing={3} sx={{ pt: '16px' }}>
+									<Grid item xs={12} md={6} lg={3}>
+										<BasicAutocomplete
+											label={'Tax Items'}
+											value={taxItems}
+											handleChange={handleAutocompleteChange('taxItems')}
+											options={taxData}
+										/>
+									</Grid>
+									<Grid item xs={12} md={6} lg={3}>
+										<FormControl sx={{ width: '100%' }}>
+											<InputLabel>Tax On Items</InputLabel>
+											<Select
+												multiple
+												value={taxOnItemsArray}
+												onChange={handleArrayChange('taxOnItemsArray')}
+												input={<OutlinedInput label="Tax On Items" />}
+												renderValue={(selected) => selected.join(', ')}
+												MenuProps={MenuProps}
+											>
+												{taxData.map((name) => (
+													<MenuItem key={name.label} value={name.label}>
+														<Checkbox checked={taxOnItemsArray.indexOf(name.label) > -1} />
+														<ListItemText primary={name.label} />
+													</MenuItem>
+												))}
+											</Select>
+										</FormControl>
+									</Grid>
+									<Grid item xs={12} md={6} lg={2}>
+										<BasicSelect
+											label={'Formula Type'}
+											value={formulaType}
+											handleChange={handleSelectChange('formulaType')}
+											options={[
+												{ value: 'Per', name: 'Per' },
+												{ value: 'Percent', name: 'Percent' }
+											]}
+										/>
+									</Grid>
+									<Grid item xs={12} md={6} lg={2}>
+										<BasicAutocomplete
+											label={'UOM'}
+											value={uom}
+											handleChange={handleAutocompleteChange('uom')}
+											options={uomData}
+										/>
+									</Grid>
+									<Grid item xs={12} md={6} lg={2}>
+										<BasicAutocomplete
+											label={'Formula Basis'}
+											value={fb}
+											handleChange={handleAutocompleteChange('fb')}
+											options={fbData}
+										/>
+									</Grid>
 								</Grid>
-								<Grid item xs={12} md={6} lg={2}>
-									<TextField
-										value={fuelQty}
-										onChange={handleTextFieldChange('fuelQty')}
-										label="Fuel Qty"
-										variant="outlined"
-										type="number"
-									/>
+								<Grid container spacing={3} sx={{ pt: '16px' }}>
+									<Grid item xs={12} md={6} lg={2}>
+										<TextField
+											value={taxRate}
+											onChange={handleTextFieldChange('taxRate')}
+											label="Tax Rate"
+											variant="outlined"
+											type="number"
+										/>
+									</Grid>
+									<Grid item xs={12} md={6} lg={2}>
+										<BasicAutocomplete
+											label={'Currency'}
+											value={curr}
+											handleChange={handleAutocompleteChange('curr')}
+											options={[
+												{ label: 'CAD' },
+												{ label: 'USD' },
+												{ label: 'GBP' },
+												{ label: 'EUR' }
+											]}
+										/>
+									</Grid>
+									<Grid item xs={12} md={6} lg={2}>
+										<BasicAutocomplete
+											label={'Tax Authority'}
+											value={taxAuthority}
+											handleChange={handleAutocompleteChange('taxAuthority')}
+											options={[
+												{ label: 'Conoco Philips' },
+												{ label: 'Adnoc' },
+												{ label: 'Max Fuel' }
+											]}
+										/>
+									</Grid>
+									<Grid item xs={12} md={6} lg={2}>
+										<BasicAutocomplete
+											label={'Jurisdiction'}
+											value={jurisdiction}
+											handleChange={handleAutocompleteChange('jurisdiction')}
+											options={[
+												{ label: 'US Govt' },
+												{ label: 'State of Florida' },
+												{ label: 'Miami-Dade County' }
+											]}
+										/>
+									</Grid>
+									<Grid item xs={12} md={6} lg={2}>
+										<BasicSelect
+											label={'Customer(specific)'}
+											value={ccustomer}
+											handleChange={handleSelectChange('ccustomer')}
+											options={customerData}
+										/>
+									</Grid>
 								</Grid>
-								<Grid item xs={12} md={6} lg={2}>
-									<BasicAutocomplete
-										label={'Required UOM'}
-										value={ruom}
-										handleChange={handleAutocompleteChange('ruom')}
-										options={uomData}
-									/>
+							</AccordionDetails>
+						</Accordion>
+					)}
+
+					{isCreate && (
+						<Accordion expanded={expanded.includes('panel7')} onChange={handleChange('panel7')}>
+							<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+								<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>
+									Exempts and Validity
+								</Typography>
+							</AccordionSummary>
+							<AccordionDetails>
+								<Grid container spacing={3}>
+									<Grid item xs={12} md={6}>
+										<FormControl sx={{ width: '100%', maxWidth: 300 }}>
+											<InputLabel>Exempt Customer(s)</InputLabel>
+											<Select
+												multiple
+												value={exemptCustomers}
+												onChange={handleArrayChange('exemptCustomers')}
+												input={<OutlinedInput label="Exempt Customer(s)" />}
+												renderValue={(selected) => selected.join(', ')}
+												MenuProps={MenuProps}
+											>
+												{customerData.map(({ name }) => (
+													<MenuItem key={name} value={name}>
+														<Checkbox checked={exemptCustomers.indexOf(name) > -1} />
+														<ListItemText primary={name} />
+													</MenuItem>
+												))}
+											</Select>
+										</FormControl>
+									</Grid>
+									<Grid item xs={12} md={6}>
+										<FormControlLabel
+											control={
+												<Checkbox
+													checked={exemptFromInternationalFlight}
+													onChange={handleCheckboxChange('exemptFromInternationalFlight')}
+												/>
+											}
+											label="Exempt From International Flight"
+										/>
+									</Grid>
 								</Grid>
-								<Grid item xs={12} md={6} lg={2}>
-									<BasicAutocomplete
-										label={'Required Currency'}
-										value={rcurr}
-										handleChange={handleAutocompleteChange('rcurr')}
-										options={[
-											{ label: 'INR' },
-											{ label: 'USD' },
-											{ label: 'GBP' },
-											{ label: 'EUR' }
-										]}
-									/>
+								<Grid container spacing={3} sx={{ pt: '16px' }}>
+									<Grid item xs={12} md={6}>
+										<DatePicker
+											label="Effective From"
+											value={effFrom}
+											onChange={(newValue) => {
+												setState({ ...state, effFrom: newValue });
+											}}
+											renderInput={(params) => <TextField {...params} />}
+										/>
+									</Grid>
+									<Grid item xs={12} md={6}>
+										<TextField
+											value={notes}
+											onChange={handleTextFieldChange('notes')}
+											label="Notes"
+											variant="outlined"
+											multiline
+											maxRows={4}
+										/>
+									</Grid>
 								</Grid>
-							</Grid>
-						</AccordionDetails>
-					</Accordion>
+							</AccordionDetails>
+						</Accordion>
+					)}
 					{!isCreate && (
 						<Box sx={{ display: 'flex', alignItems: 'flex-end', mt: '10px', mb: '10px' }}>
 							<ComputeButton

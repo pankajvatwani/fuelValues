@@ -10,7 +10,12 @@ import Paper from '@mui/material/Paper';
 export default function ComputeOutputTable({ rows, isFees }) {
 	return (
 		<TableContainer component={Paper}>
-			<Table sx={{ minWidth: 650, backgroundColor: '#f1f1f1' }}>
+			<Table
+				sx={{
+					minWidth: 650
+					// backgroundColor: '#f1f1f1'
+				}}
+			>
 				<TableHead>
 					<TableRow>
 						<TableCell

@@ -9,6 +9,7 @@ import { aircraftType } from './aircraftType';
 import { flightServiceType } from './flightServiceType';
 import { IPAL } from './IntoPlageAgentsList';
 import { UOM } from './UOM';
+import { FormulaBasis } from './FormulaBasis';
 
 export const countryData = countries.map((country) => {
 	return {
@@ -25,10 +26,7 @@ export const stateData = states.map((state) => {
 });
 
 export const taxData = TaxItems.map((taxItem) => {
-	return {
-		value: taxItem.Code,
-		name: taxItem.TaxItem
-	};
+	return { label: taxItem.TaxItem };
 });
 
 export const customerData = Customers.map((customer) => {
@@ -71,4 +69,8 @@ export const ipalData = IPAL.map((ipal) => {
 
 export const uomData = UOM.map((uom) => {
 	return { label: uom.Description };
+});
+
+export const fbData = FormulaBasis.map((fb) => {
+	return { label: fb.FBItem };
 });

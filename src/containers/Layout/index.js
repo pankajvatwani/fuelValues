@@ -14,6 +14,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MainListItems from '../MainList';
 import Logo from '../../data/Logo.png';
 import { Avatar } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 
 const drawerWidth = 240;
 
@@ -57,6 +59,13 @@ function Layout(props) {
 	const toggleDrawer = () => {
 		setOpen(!open);
 	};
+	const [ anchorEl, setAnchorEl ] = React.useState(null);
+	const handleMenu = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 	const Component = props.component;
 	return (
 		<ThemeProvider theme={mdTheme}>
@@ -76,7 +85,7 @@ function Layout(props) {
 								flexDirection: 'column'
 							}}
 						>
-							<Avatar variant="square" src={Logo} sx={{ minWidth: '200px' }} />
+							<Avatar variant="square" src={Logo} sx={{ minWidth: '150px' }} />
 						</div>
 						<IconButton
 							sx={{
@@ -85,9 +94,27 @@ function Layout(props) {
 									backgroundColor: 'grey'
 								}
 							}}
+							onClick={handleMenu}
 						>
 							<AccountCircle />
 						</IconButton>
+						<Menu
+							anchorEl={anchorEl}
+							anchorOrigin={{
+								vertical: 'top',
+								horizontal: 'right'
+							}}
+							keepMounted
+							transformOrigin={{
+								vertical: 'top',
+								horizontal: 'right'
+							}}
+							open={Boolean(anchorEl)}
+							onClose={handleClose}
+						>
+							<MenuItem onClick={handleClose}>Profile</MenuItem>
+							<MenuItem onClick={handleClose}>Logout</MenuItem>
+						</Menu>
 					</Toolbar>
 				</AppBar>
 				<Drawer variant="permanent" open={open} sx={{ pt: '64px' }}>

@@ -67,7 +67,7 @@ function Taxes() {
 		>
 			<Grid container spacing={3}>
 				<Grid item xs={12}>
-					<PanelTemplate header="Taxes">
+					<PanelTemplate header="Taxes" openDialog={() => setOpenCreateDialog(true)} createTax={true}>
 						<Grid container spacing={3} sx={{ mb: 2, pr: 1, pl: 1 }}>
 							<Grid item xs={12} md={6} lg={4}>
 								<BasicSelect

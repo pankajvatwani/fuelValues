@@ -4,7 +4,7 @@ import { withStyles } from '@mui/styles';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import AddIcon from '@mui/icons-material/Add';
-import { IconButton } from '@mui/material';
+import { IconButton, Button } from '@mui/material';
 
 const styles = (theme) => ({
 	mainPaper: {
@@ -27,16 +27,27 @@ const styles = (theme) => ({
 		color: 'white',
 		display: 'flex',
 		justifyContent: 'space-between'
+	},
+	createTaxHeader: {
+		display: 'flex',
+		justifyContent: 'space-between'
 	}
 });
 
 class PanelTemplate extends Component {
 	render() {
-		const { children, classes, header, grey = false } = this.props;
+		const { children, classes, header, grey = false, createTax = false } = this.props;
 		const classNames = classes.mainPaper;
 		return (
 			<Paper square className={classNames} variant="outlined">
-				<Typography component="div" className={clsx(classes.paperHeader, grey && classes.greyHeader)}>
+				<Typography
+					component="div"
+					className={clsx(
+						classes.paperHeader,
+						grey && classes.greyHeader,
+						createTax && classes.createTaxHeader
+					)}
+				>
 					{header}
 					{grey && (
 						<IconButton onClick={this.props.openDialog}>
@@ -44,6 +55,7 @@ class PanelTemplate extends Component {
 							<AddIcon sx={{ color: 'white' }} />{' '}
 						</IconButton>
 					)}
+					{createTax && <Button onClick={this.props.openDialog}>Create New Tax</Button>}
 				</Typography>
 				{children}
 			</Paper>

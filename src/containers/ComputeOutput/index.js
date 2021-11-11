@@ -18,6 +18,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import moment from 'moment';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
+import BasicBoxLayout from '../../components/common/BasicBoxLayout';
 function ComputeOutput({ state, back }) {
 	const {
 		intoPlane,
@@ -97,7 +98,7 @@ function ComputeOutput({ state, back }) {
 				pl: '32px'
 			}}
 		>
-			<Breadcrumbs sx={{ pl: '24px' }}>
+			<Breadcrumbs sx={{ pl: '24px', cursor: 'pointer' }}>
 				<Link underline="hover" color="inherit">
 					Home
 				</Link>
@@ -180,19 +181,7 @@ function ComputeOutput({ state, back }) {
 									</Grid>
 								</Grid>
 							</PanelTemplate>
-							<Box
-								sx={{
-									display: 'flex',
-									alignItems: 'center',
-									justifyContent: 'center',
-									flexDirection: 'column'
-								}}
-							>
-								<Box sx={{ fontWeight: 700, pt: '8px' }}>Flat Tax - $20</Box>
-								<Box sx={{ fontWeight: 700, pt: '8px' }}>
-									Total Taxes Including Flat Tax- ${taxTotal().toFixed(6)}
-								</Box>
-							</Box>
+							<BasicBoxLayout total={taxTotal()} />
 						</Box>
 						<Box>
 							<PanelTemplate header={`Fees`}>
@@ -202,19 +191,7 @@ function ComputeOutput({ state, back }) {
 									</Grid>
 								</Grid>
 							</PanelTemplate>
-							<Box
-								sx={{
-									display: 'flex',
-									alignItems: 'center',
-									justifyContent: 'center',
-									flexDirection: 'column'
-								}}
-							>
-								<Box sx={{ fontWeight: 700, pt: '8px' }}>Flat Fee - $20</Box>
-								<Box sx={{ fontWeight: 700, pt: '8px' }}>
-									Total Fees Including Flat Fee - ${feeTotal().toFixed(6)}
-								</Box>
-							</Box>
+							<BasicBoxLayout total={feeTotal()} />
 						</Box>
 					</TabPanel>
 					<TabPanel value="2">
@@ -226,19 +203,7 @@ function ComputeOutput({ state, back }) {
 									</Grid>
 								</Grid>
 							</PanelTemplate>
-							<Box
-								sx={{
-									display: 'flex',
-									alignItems: 'center',
-									justifyContent: 'center',
-									flexDirection: 'column'
-								}}
-							>
-								<Box sx={{ fontWeight: 700, pt: '8px' }}>Flat Tax - $20</Box>
-								<Box sx={{ fontWeight: 700, pt: '8px' }}>
-									Total Taxes Including Flat Tax- ${taxTotal().toFixed(6)}
-								</Box>
-							</Box>
+							<BasicBoxLayout total={taxTotal()} />
 						</Box>
 						<Box>
 							<PanelTemplate header={`Fees`}>
@@ -248,19 +213,7 @@ function ComputeOutput({ state, back }) {
 									</Grid>
 								</Grid>
 							</PanelTemplate>
-							<Box
-								sx={{
-									display: 'flex',
-									alignItems: 'center',
-									justifyContent: 'center',
-									flexDirection: 'column'
-								}}
-							>
-								<Box sx={{ fontWeight: 700, pt: '8px' }}>Flat Fee - $20</Box>
-								<Box sx={{ fontWeight: 700, pt: '8px' }}>
-									Total Fees Including Flat Fee - ${feeTotal().toFixed(6)}
-								</Box>
-							</Box>
+							<BasicBoxLayout total={taxTotal()} />
 						</Box>
 					</TabPanel>
 				</TabContext>
