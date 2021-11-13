@@ -7,8 +7,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { result } from '../../data/TaxSearchResult';
+import { Box } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 
-export default function BasicTable() {
+export default function BasicTable({openDialog}) {
 	return (
 		<TableContainer component={Paper}>
 			<Table sx={{ minWidth: 650, backgroundColor: '#f1f1f1' }}>
@@ -43,7 +45,7 @@ export default function BasicTable() {
 							}}
 							align="right"
 						>
-							Jurisdiction
+							Tax Authority
 						</TableCell>
 						<TableCell
 							sx={{
@@ -51,8 +53,16 @@ export default function BasicTable() {
 							}}
 							align="right"
 						>
-							Tax Vendor
+							Jurisdiction
 						</TableCell>
+						{/* <TableCell
+							sx={{
+								color: '#F5874A'
+							}}
+							align="right"
+						>
+							Tax Vendor
+						</TableCell> */}
 						<TableCell
 							sx={{
 								color: '#F5874A'
@@ -67,7 +77,7 @@ export default function BasicTable() {
 							}}
 							align="right"
 						>
-							Supplier
+							Flight Service Type
 						</TableCell>
 					</TableRow>
 				</TableHead>
@@ -75,7 +85,10 @@ export default function BasicTable() {
 					{result.map((row) => (
 						<TableRow key={row.TaxItem} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
 							<TableCell component="th" scope="row" sx={{ fontWeight: 'bold' }}>
-								{row.TaxItem}
+								<Box sx={{display: 'flex', alignItems: 'center'}} >
+									<EditIcon sx={{pr: '8px', cursor: 'pointer'}} onClick={openDialog}/>
+								<p>{row.TaxItem}</p>
+								</Box>
 							</TableCell>
 							<TableCell sx={{ fontWeight: 'bold' }} align="right">
 								{row.TaxRate}
@@ -84,16 +97,19 @@ export default function BasicTable() {
 								{row.Customs}
 							</TableCell>
 							<TableCell sx={{ fontWeight: 'bold' }} align="right">
-								{row.Jurisdictions}
+							{row.TaxVendor}
 							</TableCell>
 							<TableCell sx={{ fontWeight: 'bold' }} align="right">
-								{row.TaxVendor}
+								{row.Jurisdictions}
 							</TableCell>
+							{/* <TableCell sx={{ fontWeight: 'bold' }} align="right">
+								{row.TaxVendor}
+							</TableCell> */}
 							<TableCell sx={{ fontWeight: 'bold' }} align="right">
 								{row.Customer}
 							</TableCell>
 							<TableCell sx={{ fontWeight: 'bold' }} align="right">
-								{row.Supplier}
+								{row.FlightServiceType}
 							</TableCell>
 						</TableRow>
 					))}

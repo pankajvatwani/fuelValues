@@ -9,7 +9,8 @@ export const result = [
 		Jurisdictions: 'Miami Dade County',
 		Customer: '',
 		Supplier: '',
-		TaxRate: '0.005417'
+		TaxRate: '0.005417',
+		FlightServiceType: "Comm Passenger - Scheduled",
 	},
 	{
 		TaxItem: 'Federal Tax',
@@ -21,7 +22,8 @@ export const result = [
 		Jurisdictions: 'US',
 		Customer: '',
 		Supplier: '',
-		TaxRate: '0.007433'
+		TaxRate: '0.007433',
+		FlightServiceType: "Comm Passenger - Scheduled",
 	},
 	{
 		TaxItem: 'Environmental Tax',
@@ -33,6 +35,7 @@ export const result = [
 		Jurisdictions: 'Dade County',
 		Customer: 'Century',
 		Supplier: 'Conoco',
-		TaxRate: '0.009977'
+		TaxRate: '0.009977',
+		FlightServiceType: "Comm Passenger - Scheduled",
 	}
 ];

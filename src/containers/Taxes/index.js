@@ -19,7 +19,7 @@ import {
 	IATAData,
 	ICAOData,
 	stateData,
-	supplierData
+	// supplierData
 	// taxData
 } from '../../data/finalSelectData';
 
@@ -30,7 +30,7 @@ function Taxes() {
 	// const [ tax, setTax ] = React.useState('');
 	const [ customer, setCustomer ] = React.useState('');
 	const [ openCreateDialog, setOpenCreateDialog ] = React.useState(false);
-	const [ supplier, setSupplier ] = React.useState('');
+	// const [ supplier, setSupplier ] = React.useState('');
 	const [ iata, setIata ] = React.useState({ label: '' });
 	const handleCountryChange = (e) => {
 		setCountry(e.target.value);
@@ -44,9 +44,9 @@ function Taxes() {
 	const handleCustomerChange = (e) => {
 		setCustomer(e.target.value);
 	};
-	const handleSupplierChange = (e) => {
-		setSupplier(e.target.value);
-	};
+	// const handleSupplierChange = (e) => {
+	// 	setSupplier(e.target.value);
+	// };
 	const handleIATAChange = (e, newValue) => {
 		setIata(newValue);
 	};
@@ -60,7 +60,7 @@ function Taxes() {
 				flexGrow: 1,
 				height: '100vh',
 				overflow: 'auto',
-				pt: '120px',
+				pt: '90px',
 				pr: '32px',
 				pl: '32px'
 			}}
@@ -114,12 +114,12 @@ function Taxes() {
 								/>
 							</Grid>
 							<Grid item xs={12} md={6} lg={4}>
-								<BasicSelect
+								{/* <BasicSelect
 									label={'Supplier'}
 									value={supplier}
 									handleChange={handleSupplierChange}
 									options={supplierData}
-								/>
+								/> */}
 							</Grid>
 							<Grid item xs={12} md={6} lg={4}>
 								<FormGroup>
@@ -153,13 +153,13 @@ function Taxes() {
 					</PanelTemplate>
 					{search && (
 						<PanelTemplate
-							header={`United States, ${state}-${get(stateSelected, 'statename', '')}`}
+							header={state ? `United States, ${state}-${get(stateSelected, 'statename', '')}` : `United States, ${'MIA'}-${'Miami International Airport'}`}
 							grey={true}
 							openDialog={() => setOpenCreateDialog(true)}
 						>
 							<Grid container spacing={3}>
 								<Grid item xs={12}>
-									<BasicTable />
+									<BasicTable openDialog={() => setOpenCreateDialog(true)} />
 								</Grid>
 							</Grid>
 						</PanelTemplate>

@@ -268,7 +268,7 @@ function Compute({ isCreate = false }) {
 						pt: '16px',
 						pb: '16px',
 						...(!isCreate && {
-							pt: '120px',
+							pt: '90px',
 							height: '100vh',
 							overflow: 'auto',
 							backgroundColor: '#f1f1f1'

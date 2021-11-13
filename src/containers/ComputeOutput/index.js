@@ -93,7 +93,7 @@ function ComputeOutput({ state, back }) {
 				flexGrow: 1,
 				height: '100vh',
 				overflow: 'auto',
-				pt: '120px',
+				pt: '90px',
 				pr: '32px',
 				pl: '32px'
 			}}

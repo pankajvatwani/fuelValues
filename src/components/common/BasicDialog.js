@@ -32,7 +32,7 @@ export default function AlertDialog({ open, handleClose }) {
 						}}
 					>
 						<Box>
-							<Button
+							{/* <Button
 								variant="contained"
 								onClick={handleClose}
 								sx={{
@@ -43,10 +43,10 @@ export default function AlertDialog({ open, handleClose }) {
 								}}
 							>
 								Previous
-							</Button>
+							</Button> */}
 						</Box>
 						<Box>
-							<Button
+							{/* <Button
 								sx={{
 									mr: '24px',
 									width: '192px',
@@ -59,7 +59,7 @@ export default function AlertDialog({ open, handleClose }) {
 								onClick={handleClose}
 							>
 								Next
-							</Button>
+							</Button> */}
 							<Button
 								sx={{
 									width: '200px',
@@ -70,8 +70,9 @@ export default function AlertDialog({ open, handleClose }) {
 								}}
 								variant="contained"
 								onClick={handleClose}
+								disableFocusRipple
 							>
-								Save and Next
+								Save 
 							</Button>
 						</Box>
 					</Box>

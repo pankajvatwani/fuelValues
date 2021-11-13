@@ -55,7 +55,7 @@ class PanelTemplate extends Component {
 							<AddIcon sx={{ color: 'white' }} />{' '}
 						</IconButton>
 					)}
-					{createTax && <Button onClick={this.props.openDialog}>Create New Tax</Button>}
+					{createTax && <Button variant="contained" onClick={this.props.openDialog}>Create New Tax</Button>}
 				</Typography>
 				{children}
 			</Paper>

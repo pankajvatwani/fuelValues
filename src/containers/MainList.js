@@ -3,11 +3,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import CalculateIcon from '@mui/icons-material/Calculate';
+import BallotIcon from '@mui/icons-material/Ballot';
 import { forwardTo } from './utils';
 import { withRouter } from 'react-router-dom';
 import { Box } from '@mui/system';
@@ -57,7 +57,8 @@ class MainListItems extends React.Component {
 					}}
 				>
 					<ListItemIcon sx={{ minWidth: '24px' }}>
-						<ShoppingCartIcon />
+						{/* <ShoppingCartIcon /> */}
+						<AccountBalanceIcon />
 					</ListItemIcon>
 					<ListItemText
 						sx={{
@@ -80,7 +81,7 @@ class MainListItems extends React.Component {
 					}}
 				>
 					<ListItemIcon sx={{ minWidth: '24px' }}>
-						<AssignmentIcon />
+						<CalculateIcon />
 					</ListItemIcon>
 					<ListItemText
 						sx={{
@@ -100,7 +101,7 @@ class MainListItems extends React.Component {
 					}}
 				>
 					<ListItemIcon sx={{ minWidth: '24px' }}>
-						<PeopleIcon />
+						<BallotIcon />
 					</ListItemIcon>
 					<ListItemText
 						sx={{
