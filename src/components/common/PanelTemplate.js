@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import AddIcon from '@mui/icons-material/Add';
 import { IconButton, Button } from '@mui/material';
+import { forwardTo } from '../../containers/utils';
 
 const styles = (theme) => ({
 	mainPaper: {
@@ -50,12 +51,25 @@ class PanelTemplate extends Component {
 				>
 					{header}
 					{grey && (
-						<IconButton onClick={this.props.openDialog}>
+						<IconButton
+							onClick={() => {
+								forwardTo('/taxes/new');
+							}}
+						>
 							{' '}
 							<AddIcon sx={{ color: 'white' }} />{' '}
 						</IconButton>
 					)}
-					{createTax && <Button variant="contained" onClick={this.props.openDialog}>Create New Tax</Button>}
+					{createTax && (
+						<Button
+							variant="contained"
+							onClick={() => {
+								forwardTo('/taxes/new');
+							}}
+						>
+							Define Tax
+						</Button>
+					)}
 				</Typography>
 				{children}
 			</Paper>

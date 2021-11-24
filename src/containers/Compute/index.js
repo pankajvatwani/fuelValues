@@ -39,6 +39,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
 function Compute({ isCreate = false }) {
 	const [ expanded, setExpanded ] = React.useState([
 		'panel1',
@@ -275,6 +277,16 @@ function Compute({ isCreate = false }) {
 						})
 					}}
 				>
+					{!isCreate && (
+						<Breadcrumbs sx={{ pb: '16px', cursor: 'pointer' }}>
+							<Link underline="hover" color="inherit">
+								Home
+							</Link>
+							<Link underline="hover" color="text.primary">
+								Compute
+							</Link>
+						</Breadcrumbs>
+					)}
 					<Accordion expanded={expanded.includes('panel1')} onChange={handleChange('panel1')}>
 						<AccordionSummary expandIcon={<ExpandMoreIcon />}>
 							<Typography sx={{ width: '33%', flexShrink: 0, fontWeight: 700 }}>

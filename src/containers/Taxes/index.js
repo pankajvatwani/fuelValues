@@ -18,10 +18,11 @@ import {
 	customerData,
 	IATAData,
 	ICAOData,
-	stateData,
+	stateData
 	// supplierData
 	// taxData
 } from '../../data/finalSelectData';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 
 function Taxes() {
 	const [ search, setSearch ] = React.useState(false);
@@ -65,6 +66,14 @@ function Taxes() {
 				pl: '32px'
 			}}
 		>
+			<Breadcrumbs sx={{ cursor: 'pointer' }}>
+				<Link underline="hover" color="inherit">
+					Home
+				</Link>
+				<Link underline="hover" color="text.primary">
+					Taxes
+				</Link>
+			</Breadcrumbs>
 			<Grid container spacing={3}>
 				<Grid item xs={12}>
 					<PanelTemplate header="Taxes" openDialog={() => setOpenCreateDialog(true)} createTax={true}>
@@ -153,7 +162,13 @@ function Taxes() {
 					</PanelTemplate>
 					{search && (
 						<PanelTemplate
-							header={state ? `United States, ${state}-${get(stateSelected, 'statename', '')}` : `United States, ${'MIA'}-${'Miami International Airport'}`}
+							header={
+								state ? (
+									`United States, ${state}-${get(stateSelected, 'statename', '')}`
+								) : (
+									`United States, ${'MIA'}-${'Miami International Airport'}`
+								)
+							}
 							grey={true}
 							openDialog={() => setOpenCreateDialog(true)}
 						>

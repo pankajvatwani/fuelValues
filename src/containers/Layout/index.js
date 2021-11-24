@@ -14,8 +14,10 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MainListItems from '../MainList';
 import Logo from '../../data/Logo.png';
 import { Avatar } from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
+import HelpIcon from '@mui/icons-material/Help';
+import Menus from '../../components/Menus';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 const drawerWidth = 240;
 
@@ -55,17 +57,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function Layout(props) {
-	const [ open, setOpen ] = React.useState(true);
+	const [ open, setOpen ] = React.useState(false);
 	const toggleDrawer = () => {
 		setOpen(!open);
 	};
-	const [ anchorEl, setAnchorEl ] = React.useState(null);
-	const handleMenu = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
+
 	const Component = props.component;
 	return (
 		<ThemeProvider theme={mdTheme}>
@@ -77,44 +73,47 @@ function Layout(props) {
 							pr: '24px' // keep right padding when drawer closed
 						}}
 					>
-						<div
-							style={{
-								flexGrow: 1,
-								alignItems: 'flex-start',
-								display: 'flex',
-								flexDirection: 'column'
+						<Box
+							sx={{
+								flexGrow: 0.8,
+								alignItems: 'center',
+								display: 'flex'
 							}}
 						>
 							<Avatar variant="square" src={Logo} sx={{ minWidth: '150px' }} />
-						</div>
-						<IconButton
+
+							<Autocomplete
+								disablePortal
+								freeSolo
+								options={[
+									'MIA-Miami International Airport',
+									'FLL- Fortlauderdale International Airport',
+									'LHR- London Heathrow',
+									'IAH - George Bush Intercontinental Airport'
+								]}
+								sx={{ width: 300, ml: '200px' }}
+								renderInput={(params) => <TextField sx={{}} {...params} label="Frequently Used IATA" />}
+							/>
+						</Box>
+						<Box
 							sx={{
-								backgroundColor: 'grey',
-								'&:hover': {
-									backgroundColor: 'grey'
-								}
+								display: 'flex',
+								flexGrow: 0.2,
+								justifyContent: 'space-between'
 							}}
-							onClick={handleMenu}
 						>
-							<AccountCircle />
-						</IconButton>
-						<Menu
-							anchorEl={anchorEl}
-							anchorOrigin={{
-								vertical: 'top',
-								horizontal: 'right'
-							}}
-							keepMounted
-							transformOrigin={{
-								vertical: 'top',
-								horizontal: 'right'
-							}}
-							open={Boolean(anchorEl)}
-							onClose={handleClose}
-						>
-							<MenuItem onClick={handleClose}>Profile</MenuItem>
-							<MenuItem onClick={handleClose}>Logout</MenuItem>
-						</Menu>
+							<Menus
+								icon={<HelpIcon />}
+								menuItems={[
+									'Getting Started',
+									'Support Center',
+									`What's New`,
+									'Terms of Service',
+									'Give Feedback'
+								]}
+							/>
+							<Menus icon={<AccountCircle />} menuItems={[ 'Profile', 'Logout' ]} />
+						</Box>
 					</Toolbar>
 				</AppBar>
 				<Drawer variant="permanent" open={open} sx={{ pt: '64px' }}>

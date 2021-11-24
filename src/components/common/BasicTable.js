@@ -9,11 +9,12 @@ import Paper from '@mui/material/Paper';
 import { result } from '../../data/TaxSearchResult';
 import { Box } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import { forwardTo } from '../../containers/utils';
 
-export default function BasicTable({openDialog}) {
+export default function BasicTable({ openDialog }) {
 	return (
 		<TableContainer component={Paper}>
-			<Table sx={{ minWidth: 650, backgroundColor: '#f1f1f1' }}>
+			<Table sx={{ minWidth: 650 }}>
 				<TableHead>
 					<TableRow>
 						<TableCell
@@ -85,9 +86,14 @@ export default function BasicTable({openDialog}) {
 					{result.map((row) => (
 						<TableRow key={row.TaxItem} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
 							<TableCell component="th" scope="row" sx={{ fontWeight: 'bold' }}>
-								<Box sx={{display: 'flex', alignItems: 'center'}} >
-									<EditIcon sx={{pr: '8px', cursor: 'pointer'}} onClick={openDialog}/>
-								<p>{row.TaxItem}</p>
+								<Box sx={{ display: 'flex', alignItems: 'center' }}>
+									<EditIcon
+										sx={{ pr: '8px', cursor: 'pointer' }}
+										onClick={() => {
+											forwardTo('/taxes/edit');
+										}}
+									/>
+									<p>{row.TaxItem}</p>
 								</Box>
 							</TableCell>
 							<TableCell sx={{ fontWeight: 'bold' }} align="right">
@@ -97,7 +103,7 @@ export default function BasicTable({openDialog}) {
 								{row.Customs}
 							</TableCell>
 							<TableCell sx={{ fontWeight: 'bold' }} align="right">
-							{row.TaxVendor}
+								{row.TaxVendor}
 							</TableCell>
 							<TableCell sx={{ fontWeight: 'bold' }} align="right">
 								{row.Jurisdictions}
