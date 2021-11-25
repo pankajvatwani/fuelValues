@@ -3,7 +3,7 @@ import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/core/ButtonUnstyled'
 import { styled } from '@mui/system';
 
 const CustomButtonRoot = styled('button')(`
-  background-color: #535CA7;
+  background-color: #1976d2;
   padding: 15px 20px;
   border-radius: 10px;
   color: #fff;

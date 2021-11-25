@@ -147,6 +147,7 @@ function Taxes() {
 									onClick={() => {
 										setSearch(true);
 									}}
+									color="primary"
 								>
 									Search
 								</CustomButton>

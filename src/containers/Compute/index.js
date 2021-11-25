@@ -182,7 +182,7 @@ function Compute({ isCreate = false }) {
 	const handleIATAChange = (e, newValue) => {
 		setState({
 			...state,
-			iata: newValue
+			iata: newValue || { label: '' }
 		});
 	};
 
@@ -257,7 +257,7 @@ function Compute({ isCreate = false }) {
 			}
 		}
 	};
-	const iataObject = iata && FL.find((fl) => fl.IATA === iata.label);
+	const iataObject = iata && FL.find((fl) => fl.IATA === iata.label.slice(0, 3));
 	if (input) {
 		return (
 			<LocalizationProvider dateAdapter={DateAdapter}>
@@ -338,7 +338,7 @@ function Compute({ isCreate = false }) {
 							<Box sx={{ display: 'flex' }}>
 								<Box sx={{ flexGrow: 0.5 }}>
 									<Grid container spacing={3} sx={{ flexDirection: 'column' }}>
-										<Grid item xs={12} md={6} lg={3}>
+										<Grid item xs={12} md={6} lg={5}>
 											<BasicAutocomplete
 												label={'IATA/ICAO'}
 												value={iata}

@@ -16,8 +16,16 @@ import Logo from '../../data/Logo.png';
 import { Avatar } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
 import Menus from '../../components/Menus';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+// import TextField from '@mui/material/TextField';
+// import Autocomplete from '@mui/material/Autocomplete';
+// import InputAdornment from '@mui/material/InputAdornment';
+// import SearchIcon from '@mui/icons-material/Search';
+// import Card from '@mui/material/Card';
+// import CardHeader from '@mui/material/CardHeader';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
+// import Popover from '@mui/material/Popover';
+// import Typography from '@mui/material/Typography';
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 
 const drawerWidth = 240;
 
@@ -30,7 +38,8 @@ const AppBar = styled(MuiAppBar, {
 		duration: theme.transitions.duration.leavingScreen
 	}),
 	display: 'flex',
-	justifyContent: 'center'
+	justifyContent: 'center',
+	boxShadow: 'none'
 }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
@@ -62,6 +71,19 @@ function Layout(props) {
 		setOpen(!open);
 	};
 
+	// const [ anchorEl, setAnchorEl ] = React.useState(null);
+	// const [ val, setVal ] = React.useState('');
+
+	// const handleClick = (event) => {
+	// 	setAnchorEl(event.currentTarget);
+	// };
+
+	// const handleClose = () => {
+	// 	setAnchorEl(null);
+	// };
+
+	// const openPopover = Boolean(anchorEl);
+
 	const Component = props.component;
 	return (
 		<ThemeProvider theme={mdTheme}>
@@ -80,20 +102,24 @@ function Layout(props) {
 								display: 'flex'
 							}}
 						>
-							<Avatar variant="square" src={Logo} sx={{ minWidth: '200px' }} />
-
-							<Autocomplete
-								disablePortal
-								freeSolo
-								options={[
-									'MIA-Miami International Airport',
-									'FLL- Fortlauderdale International Airport',
-									'LHR- London Heathrow',
-									'IAH - George Bush Intercontinental Airport'
-								]}
-								sx={{ width: 300, ml: '200px' }}
-								renderInput={(params) => <TextField sx={{}} {...params} label="Frequently Used IATA" />}
-							/>
+							<Avatar variant="square" src={Logo} sx={{ minWidth: '200px', height: '60px !important' }} />
+							<div style={{ width: 400, marginLeft: '200px' }}>
+								<ReactSearchAutocomplete
+									items={[
+										{ id: 0, name: 'MIA-Miami International Airport' },
+										{ id: 1, name: 'FLL- Fortlauderdale International Airport' },
+										{ id: 2, name: 'LHR- London Heathrow' },
+										{ id: 3, name: 'IAH - George Bush Intercontinental Airport' }
+									]}
+									placeholder="Frequently Used IATA"
+									// onSearch={handleOnSearch}
+									// onHover={handleOnHover}
+									// onSelect={handleOnSelect}
+									// onFocus={handleOnFocus}
+									// autoFocus
+									// formatResult={formatResult}
+								/>
+							</div>
 						</Box>
 						<Box
 							sx={{

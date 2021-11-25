@@ -20,6 +20,11 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import BasicBoxLayout from '../../components/common/BasicBoxLayout';
 import { FaFileCsv, FaFileExcel } from 'react-icons/fa';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import { Avatar } from '@mui/material';
+import xml from '../../data/xml.png';
+
 function ComputeOutput({ state, back }) {
 	const {
 		intoPlane,
@@ -178,15 +183,33 @@ function ComputeOutput({ state, back }) {
 							sx={{
 								'& svg': {
 									width: '24px',
-									height: '24px'
+									height: '24px',
+									color: 'green'
 								},
 								display: 'flex',
 								alignItems: 'center',
 								justifyContent: 'space-between'
 							}}
 						>
-							<FaFileCsv />
-							<FaFileExcel />
+							<Tooltip title="Export as CSV">
+								<IconButton>
+									<FaFileCsv />
+								</IconButton>
+							</Tooltip>
+							<Tooltip title="Export as Excel">
+								<IconButton>
+									<FaFileExcel />
+								</IconButton>
+							</Tooltip>
+							<Tooltip title="Export as IATA Standard XML">
+								<IconButton>
+									<Avatar
+										variant="square"
+										src={xml}
+										sx={{ width: '24px', height: '24px !important' }}
+									/>
+								</IconButton>
+							</Tooltip>
 						</Box>
 					</Box>
 					<TabPanel value="1">

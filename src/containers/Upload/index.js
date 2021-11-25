@@ -37,6 +37,7 @@ function Upload() {
 			component="main"
 			sx={{
 				flexGrow: 1,
+				backgroundColor: '#f1f1f1',
 				height: '100vh',
 				overflow: 'auto',
 				pt: '90px',
@@ -55,9 +56,10 @@ function Upload() {
 			</Typography>
 			<Divider sx={{ mb: '16px' }} />
 			<Box>
-				<Typography sx={{ mb: '16px' }}>Title</Typography>
+				<Typography sx={{ mb: '16px', fontWeight: 700 }}>Title</Typography>
 				<TextField sx={{ mb: '16px', width: '40%' }} variant="outlined" />
 			</Box>
+			<Typography sx={{ mb: '16px', fontWeight: 700 }}>Attach Documents</Typography>
 			<Box
 				sx={{
 					//backgroundColor: '#B9B9B91A',
@@ -68,7 +70,7 @@ function Upload() {
 					justifyContent: 'center',
 					flexDirection: 'column',
 					textAlign: 'center',
-					border: '1px dashed grey'
+					border: '2px dashed grey'
 				}}
 				onDrop={handleDrop}
 				onDragEnter={handleDrag}
@@ -91,6 +93,7 @@ function Upload() {
 				/>
 				<br />
 			</Box>
+			<Typography sx={{ mt: '16px' }}>Accepted File Types : .xls, .xlsx and .csv only</Typography>
 			<br />
 			<br />
 			<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '80%' }}>
