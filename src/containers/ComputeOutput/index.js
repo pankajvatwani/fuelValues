@@ -19,6 +19,7 @@ import moment from 'moment';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import BasicBoxLayout from '../../components/common/BasicBoxLayout';
+import { FaFileCsv, FaFileExcel } from 'react-icons/fa';
 function ComputeOutput({ state, back }) {
 	const {
 		intoPlane,
@@ -163,14 +164,30 @@ function ComputeOutput({ state, back }) {
 
 			<Box sx={{ width: '100%', typography: 'body1', mt: '10px' }}>
 				<TabContext value={value}>
-					<Box sx={{ borderColor: 'divider', pl: '24px' }}>
-						<TabList
-							sx={{ '& .Mui-selected': { color: 'white !important', backgroundColor: '#4F85D7' } }}
-							onChange={handleChange}
+					<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+						<Box sx={{ borderColor: 'divider', pl: '24px' }}>
+							<TabList
+								sx={{ '& .Mui-selected': { color: 'white !important', backgroundColor: '#4F85D7' } }}
+								onChange={handleChange}
+							>
+								<Tab label="Customer" value="1" />
+								<Tab label="Supplier/Agents" value="2" />
+							</TabList>
+						</Box>
+						<Box
+							sx={{
+								'& svg': {
+									width: '24px',
+									height: '24px'
+								},
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'space-between'
+							}}
 						>
-							<Tab label="Customer" value="1" />
-							<Tab label="Supplier/Agents" value="2" />
-						</TabList>
+							<FaFileCsv />
+							<FaFileExcel />
+						</Box>
 					</Box>
 					<TabPanel value="1">
 						<Box>

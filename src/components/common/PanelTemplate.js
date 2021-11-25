@@ -14,7 +14,7 @@ const styles = (theme) => ({
 		boxShadow: '0px 0px 8px #00000029'
 	},
 	paperHeader: {
-		background: '#f1f1f1',
+		// background: '#f1f1f1',
 		color: '#FF7141',
 		padding: theme.spacing(1),
 		fontWeight: 'bold',
@@ -24,8 +24,8 @@ const styles = (theme) => ({
 		fontSize: '20px'
 	},
 	greyHeader: {
-		background: '#6D6D6F',
-		color: 'white',
+		background: '#f1f1f1',
+		color: 'black',
 		display: 'flex',
 		justifyContent: 'space-between'
 	},

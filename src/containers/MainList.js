@@ -4,10 +4,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import LayersIcon from '@mui/icons-material/Layers';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import BallotIcon from '@mui/icons-material/Ballot';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { forwardTo } from './utils';
 import { withRouter } from 'react-router-dom';
 import { Box } from '@mui/system';
@@ -47,7 +47,7 @@ class MainListItems extends React.Component {
 				</ListItem>
 				<ListItem
 					button
-					selected={pathname === '/taxes'}
+					selected={pathname.includes('taxes')}
 					sx={{
 						display: 'flex',
 						flexDirection: 'column'
@@ -71,7 +71,7 @@ class MainListItems extends React.Component {
 				</ListItem>
 				<ListItem
 					button
-					selected={pathname === '/compute'}
+					selected={pathname.includes('compute')}
 					sx={{
 						display: 'flex',
 						flexDirection: 'column'
@@ -95,9 +95,13 @@ class MainListItems extends React.Component {
 
 				<ListItem
 					button
+					selected={pathname.includes('fees')}
 					sx={{
 						display: 'flex',
 						flexDirection: 'column'
+					}}
+					onClick={() => {
+						forwardTo('/fees/new');
 					}}
 				>
 					<ListItemIcon sx={{ minWidth: '24px' }}>
@@ -133,13 +137,17 @@ class MainListItems extends React.Component {
 				</ListItem>
 				<ListItem
 					button
+					selected={pathname.includes('upload')}
 					sx={{
 						display: 'flex',
 						flexDirection: 'column'
 					}}
+					onClick={() => {
+						forwardTo('/upload');
+					}}
 				>
 					<ListItemIcon sx={{ minWidth: '24px' }}>
-						<LayersIcon />
+						<FileUploadIcon />
 					</ListItemIcon>
 					<ListItemText
 						sx={{
@@ -147,7 +155,7 @@ class MainListItems extends React.Component {
 								fontWeight: 700
 							}
 						}}
-						primary="Settings"
+						primary="Upload Taxes/Fees"
 					/>
 				</ListItem>
 			</Box>

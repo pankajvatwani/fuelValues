@@ -10,6 +10,8 @@ import { flightServiceType } from './flightServiceType';
 import { IPAL } from './IntoPlageAgentsList';
 import { UOM } from './UOM';
 import { FormulaBasis } from './FormulaBasis';
+import { FeeTypes } from './feeType';
+import { FeeItems } from './feeItems';
 
 export const countryData = countries.map((country) => {
 	return {
@@ -44,7 +46,7 @@ export const supplierData = Suppliers.map((supplier) => {
 });
 
 export const IATAData = FL.map((airport) => {
-	return { label: airport.IATA };
+	return { label: `${airport.IATA}-${airport.AirportName}` };
 });
 
 export const ICAOData = FL.map((airport) => {
@@ -73,4 +75,12 @@ export const uomData = UOM.map((uom) => {
 
 export const fbData = FormulaBasis.map((fb) => {
 	return { label: fb.FBItem };
+});
+
+export const feeTypeData = FeeTypes.map((feeItem) => {
+	return { label: feeItem.FeeType };
+});
+
+export const feeItemData = FeeItems.map((fee) => {
+	return { label: fee.FeeItem };
 });

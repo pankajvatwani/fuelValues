@@ -49,7 +49,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 				easing: theme.transitions.easing.sharp,
 				duration: theme.transitions.duration.leavingScreen
 			}),
-			width: theme.spacing(15)
+			width: theme.spacing(20)
 		})
 	}
 }));
@@ -75,12 +75,12 @@ function Layout(props) {
 					>
 						<Box
 							sx={{
-								flexGrow: 0.8,
+								flexGrow: 0.9,
 								alignItems: 'center',
 								display: 'flex'
 							}}
 						>
-							<Avatar variant="square" src={Logo} sx={{ minWidth: '150px' }} />
+							<Avatar variant="square" src={Logo} sx={{ minWidth: '200px' }} />
 
 							<Autocomplete
 								disablePortal
@@ -99,7 +99,7 @@ function Layout(props) {
 							sx={{
 								display: 'flex',
 								flexGrow: 0.2,
-								justifyContent: 'space-between'
+								justifyContent: 'flex-end'
 							}}
 						>
 							<Menus

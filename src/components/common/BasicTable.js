@@ -18,66 +18,48 @@ export default function BasicTable({ openDialog }) {
 				<TableHead>
 					<TableRow>
 						<TableCell
-							sx={{
-								color: '#F5874A'
-							}}
+						// sx={{
+						// 	color: '#F5874A'
+						// }}
 						>
 							Tax
 						</TableCell>
-						<TableCell
-							sx={{
-								color: '#F5874A'
-							}}
-							align="right"
-						>
+						<TableCell // 	color: '#F5874A' // sx={{
+						// }}
+						align="right">
 							Tax Rate
 						</TableCell>
-						<TableCell
-							sx={{
-								color: '#F5874A'
-							}}
-							align="right"
-						>
+						<TableCell // 	color: '#F5874A' // sx={{
+						// }}
+						align="right">
 							Customs
 						</TableCell>
-						<TableCell
-							sx={{
-								color: '#F5874A'
-							}}
-							align="right"
-						>
+						<TableCell // 	color: '#F5874A' // sx={{
+						// }}
+						align="right">
 							Tax Authority
 						</TableCell>
-						<TableCell
-							sx={{
-								color: '#F5874A'
-							}}
-							align="right"
-						>
+						<TableCell // 	color: '#F5874A' // sx={{
+						// }}
+						align="right">
 							Jurisdiction
 						</TableCell>
 						{/* <TableCell
-							sx={{
-								color: '#F5874A'
-							}}
+							// sx={{
+							// 	color: '#F5874A'
+							// }}
 							align="right"
 						>
 							Tax Vendor
 						</TableCell> */}
-						<TableCell
-							sx={{
-								color: '#F5874A'
-							}}
-							align="right"
-						>
+						<TableCell // 	color: '#F5874A' // sx={{
+						// }}
+						align="right">
 							Customer
 						</TableCell>
-						<TableCell
-							sx={{
-								color: '#F5874A'
-							}}
-							align="right"
-						>
+						<TableCell // 	color: '#F5874A' // sx={{
+						// }}
+						align="right">
 							Flight Service Type
 						</TableCell>
 					</TableRow>
@@ -85,7 +67,7 @@ export default function BasicTable({ openDialog }) {
 				<TableBody>
 					{result.map((row) => (
 						<TableRow key={row.TaxItem} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-							<TableCell component="th" scope="row" sx={{ fontWeight: 'bold' }}>
+							<TableCell component="th" scope="row">
 								<Box sx={{ display: 'flex', alignItems: 'center' }}>
 									<EditIcon
 										sx={{ pr: '8px', cursor: 'pointer' }}
@@ -96,27 +78,15 @@ export default function BasicTable({ openDialog }) {
 									<p>{row.TaxItem}</p>
 								</Box>
 							</TableCell>
-							<TableCell sx={{ fontWeight: 'bold' }} align="right">
-								{row.TaxRate}
-							</TableCell>
-							<TableCell sx={{ fontWeight: 'bold' }} align="right">
-								{row.Customs}
-							</TableCell>
-							<TableCell sx={{ fontWeight: 'bold' }} align="right">
-								{row.TaxVendor}
-							</TableCell>
-							<TableCell sx={{ fontWeight: 'bold' }} align="right">
-								{row.Jurisdictions}
-							</TableCell>
-							{/* <TableCell sx={{ fontWeight: 'bold' }} align="right">
+							<TableCell align="right">{row.TaxRate}</TableCell>
+							<TableCell align="right">{row.Customs}</TableCell>
+							<TableCell align="right">{row.TaxVendor}</TableCell>
+							<TableCell align="right">{row.Jurisdictions}</TableCell>
+							{/* <TableCell  align="right">
 								{row.TaxVendor}
 							</TableCell> */}
-							<TableCell sx={{ fontWeight: 'bold' }} align="right">
-								{row.Customer}
-							</TableCell>
-							<TableCell sx={{ fontWeight: 'bold' }} align="right">
-								{row.FlightServiceType}
-							</TableCell>
+							<TableCell align="right">{row.Customer}</TableCell>
+							<TableCell align="right">{row.FlightServiceType}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
